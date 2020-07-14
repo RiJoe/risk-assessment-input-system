@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dasanti.riskassessmentinputsystem.mapper.EnterpriseMapper">
+    <select id="getEnterpriseById" resultType="com.dasanti.riskassessmentinputsystem.entity.Enterprise">
+        SELECT * FROM enterprise WHERE id = #{id}
+    </select>
+    <select id="getEnterpriseId" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT id FROM enterprise WHERE company_name = #{companyName}
+    </select>
+    <insert id="saveEnterprise" parameterType="com.dasanti.riskassessmentinputsystem.entity.Enterprise" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO enterprise(
+
+            company_name,
+            principal,
+            fill_name,
+            fill_number,
+            employee_number,
+            address,
+            lng,
+            lat,
+            note,
+            risk_score,
+            strengthen_training,
+            major_source_of_danger,
+            main_risk
+        )values (
+            #{companyName},
+            #{principal},
+            #{fillName},
+            #{fillNumber},
+            #{employeeNumber},
+            #{address},
+            #{lng},
+            #{lat},
+            #{note},
+            #{riskScore},
+            #{strengthenTraining},
+            #{majorSourceOfDanger},
+            #{mainRisk}
+        )
+
+    </insert>
+</mapper>

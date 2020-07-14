@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>信息录入首页</title>
+    <!-- 引入样式文件 -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"
+    />
+    <style>
+
+        h4{
+            color: red;
+        }
+        h3{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <van-sticky>
+            <van-nav-bar
+                    title="企业点位风险信息录入系统"
+            />
+        </van-sticky>
+        <div>
+            <h3>
+                注意：
+            </h3>
+            <p>
+                <h4>请先录入企业信息后再进行相关信息录入！选择相应的选项，并在该项上传相应的照片，照片尽量横拍（照片尺寸：3.5*4.5），若选无则无需上传照片！◯圆框为单选，▢方框为多选！</h4>
+            </p>
+        </div>
+        <van-button type="primary" size="large" url="enterpriseinformation.html">录入企业信息</van-button>
+        <div><van-divider /></div>
+        <!--<van-button type="primary" size="large" url="theaccidentconsequences.html">事故后果</van-button>
+        <div><van-divider /></div>
+        <van-button type="primary" size="large" url="possibilityofaccident.html">事故可能性</van-button>
+        <div><van-divider /></div>
+        <van-button type="primary" size="large" url="thenumberofemployees.html">事故暴露程度</van-button>-->
+    </div>
+
+</body>
+<!-- 引入 Vue 和 Vant 的 JS 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {},
+    });
+</script>
+</html>

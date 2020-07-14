@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>企业信息录入</title>
+    <!-- 引入样式文件 -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"
+    />
+    <style>
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .block {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center;     /* 垂直居中 */
+            width: 120px;
+            height: 120px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <van-sticky>
+                <van-nav-bar
+                        title="企业信息录入"
+                />
+            </van-sticky>
+        </div>
+        <van-form @submit="onSubmit">
+            <van-field
+                    v-model="companyname"
+                    name="单位名称"
+                    label="单位名称"
+                    placeholder="单位名称"
+                    :rules="[{ required: true, message: '请填写单位名称' }]">
+        </van-field>
+            <van-field
+                    v-model="principal"
+                    name="主要负责人"
+                    label="主要负责人"
+                    placeholder="主要负责人姓名"
+                    >
+        </van-field>
+            <van-field
+                    v-model="fillname"
+                    name="填报人"
+                    label="填报人"
+                    placeholder="填报人姓名"
+                    >
+            </van-field>
+            <van-field
+                    v-model="fillnumber"
+                    name="填报人电话"
+                    label="填报人电话"
+                    placeholder="填报人电话"
+                    >
+            </van-field>
+            <van-field
+                    v-model="employeenumber"
+                    name="全员人数"
+                    label="全员人数"
+                    placeholder="全员人数"
+                    >
+            </van-field>
+            <van-field
+                    v-model="riskScore"
+                    name="风险值"
+                    label="风险值"
+                    placeholder="风险值"
+            >
+            </van-field>
+
+            <van-field
+                    v-model="strengthenTraining"
+                    name="加强培训"
+                    label="加强培训"
+                    placeholder="加强培训"
+            >
+            </van-field>
+            <van-field
+                    v-model="majorSourceOfDanger"
+                    name="主要危险源"
+                    label="主要危险源"
+                    placeholder="主要危险源"
+            >
+            </van-field>
+            <van-field
+                    v-model="mainRisk"
+                    name="主要风险名称"
+                    label="主要风险名称"
+                    placeholder="主要风险名称"
+            >
+            </van-field>
+
+
+                <van-field
+                        v-model="address"
+                        name="地址"
+                        label="地址"
+                        placeholder="地址"
+                        >
+                </van-field>
+
+            <van-cell title="根据地址获取经纬度" icon="location" is-link @click="getlatitudeandlongitude()"></van-cell>
+            <a href="http://api.map.baidu.com/lbsapi/getpoint/index.html">手动获取经纬度</a>
+            <van-field
+                    v-model="lng"
+                    name="经度"
+                    label="经度"
+                    placeholder="经度"
+                    >
+            </van-field>
+            <van-field
+                    v-model="lat"
+                    name="纬度"
+                    label="纬度"
+                    placeholder="纬度"
+                    >
+            </van-field>
+            <van-field
+                    v-model="note"
+                    name="近三年有无发生一般事故及以上事故"
+                    label="近三年有无发生一般事故及以上事故"
+                    type="textarea"
+                    input-align="right"
+            >
+            </van-field>
+            <p>(备注：一般事故是指3人以下死亡，或者10人以下重伤，或者1000万元以下直接经济损失的事)</p>
+            <div style="margin: 16px;">
+                <van-button round block type="info" native-type="submit" >
+                    提交
+                </van-button>
+            </div>
+        </van-form>
+        <van-overlay :show="show" @click="show = false">
+            <div class="wrapper" @click.stop>
+                <div class="block">
+                    <div>
+                        <van-loading type="spinner" color="#1989fa" />
+
+                        <div>上传中</div>
+                    </div>
+                </div>
+            </div>
+        </van-overlay>
+    </div>
+</body>
+<!-- 引入 Vue 和 Vant 的 JS 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+     var vm = new Vue({
+        el: "#app",
+        data: {
+            companyname: '',
+            principal: '',
+            fillname: '',
+            fillnumber: '',
+            employeenumber: '',
+            address: '',
+            lng: '',
+            lat: '',
+            note: '无',
+            riskScore: '',
+            strengthenTraining: '',
+            majorSourceOfDanger: '',
+            mainRisk: '',
+            show: false
+        },
+        mounted(){
+
+        },
+
+        methods: {
+
+            onSubmit(values) {
+                this.show = true
+                var vm = this;
+                //console.log('submit', values);
+                axios({
+
+                    url: '/save/enterprise',
+                    method: 'post',
+                    data: {
+                        companyName: this.companyname,
+                        principal: this.principal,
+                        fillName: this.fillname,
+                        fillNumber: this.fillnumber,
+                        employeeNumber: this.employeenumber,
+                        address: this.address,
+                        lng: this.lng,
+                        lat: this.lat,
+                        note: this.note,
+                        riskScore: this.riskScore,
+                        strengthenTraining: this.strengthenTraining,
+                        majorSourceOfDanger: this.majorSourceOfDanger,
+                        mainRisk: this.mainRisk,
+                    }
+                }).then(function(response){
+                    if(response.result="SUCCESS"){
+                        //vant.Toast.success('录入成功',window.location.href = "http://localhost:8080/theaccidentconsequences.html");
+                        window.location.href = "http://localhost:8080/theaccidentconsequences.html";
+
+                    }
+
+
+                }).catch(function(response){
+                    if(response.result="FAILED"){
+                        //vant.Toast.fail('录入失败，请重新录入',window.location.href="http://localhost:8080/enterpriseinformation.html");
+                        window.location.href="http://localhost:8080/enterpriseinformation.html";
+                    }
+
+                })
+            },
+            // 发送axios请求获取经纬度
+            getlatitudeandlongitude(){
+
+                axios({
+                    url: '/get/lng/and/lat'+'?address=' + this.address,
+                    method: 'get',
+
+                }).then(function(response){
+
+                    vm.lng=response.data.data.result.location.lng;
+                    vm.lat=response.data.data.result.location.lat;
+
+
+                })
+            },
+        }
+    });
+</script>
+</html>

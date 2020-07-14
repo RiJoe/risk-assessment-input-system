@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dasanti.riskassessmentinputsystem.mapper.ConcreteEvaluationMapper">
+    <insert id="saveDetermineFactors" parameterType="com.dasanti.riskassessmentinputsystem.entity.DetermineFactors">
+        INSERT INTO concrete_evaluation(
+            enterprise_id,
+            category_id,
+            influence_factor_id,
+            determine_factor,
+            score,
+            photo,
+            remark
+        )values(
+            #{enterpriseId},
+            #{categoryId},
+            #{influenceFactorId},
+            #{determineFactor},
+            #{score},
+            #{photo},
+            #{remark}
+        )
+    </insert>
+    <select id="getScoreByDetermineFactor" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT
+        score
+            FROM
+        factor_score
+            WHERE
+        name = #{scoreName}
+
+    </select>
+    <select id="getPhotoById" resultType="java.lang.String">
+        SELECT
+            photo
+        FROM
+           concrete_evaluation
+        WHERE enterprise_id = #{enterpriseId} and category_id = #{influenceFactorId} and determine_factor = #{determineFactor}
+    </select>
+    <select id="getDetermineFactorListById" resultType="com.dasanti.riskassessmentinputsystem.entity.DetermineFactors" parameterType="java.lang.Integer">
+        SELECT *
+        FROM concrete_evaluation
+        WHERE enterprise_id = #{enterpriseId}
+    </select>
+    <select id="getAllScore" resultType="com.dasanti.riskassessmentinputsystem.entity.FactorScore">
+        SELECT
+        name,
+        score
+        FROM factor_score
+    </select>
+</mapper>

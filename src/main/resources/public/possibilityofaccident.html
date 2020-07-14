@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>事故可能性</title>
+    <!-- 引入样式文件 -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"
+    />
+    <style>
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .block {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center;     /* 垂直居中 */
+            width: 120px;
+            height: 120px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <van-sticky>
+                <van-nav-bar
+                        title="事故可能性"
+                />
+            </van-sticky>
+        </div>
+        <van-form @submit="onSubmit">
+        <!--生产安全标准化-->
+        <van-row type="flex">
+        <van-field name="standardizationradio" label="安全生产标准化" >
+            <template #input>
+                <van-radio-group v-model="standardizationradio" direction="vertical">
+                    <van-radio name="未达标">未达标</van-radio>
+                    <van-radio name="达标但记录不完善">达标但记录不完善</van-radio>
+                    <van-radio name="达标且有效运行">达标且有效运行</van-radio>
+                </van-radio-group>
+            </template>
+        </van-field>
+            <div>
+                <!--上传图片-->
+                <van-field name="standardizationuploader"  >
+                    <template #input>
+                        <van-uploader  v-model="standardizationuploader" />
+                    </template>
+                </van-field>
+            </div>
+        </van-row>
+            <van-field label="安全生产标准化选项分值" placeholder="安全生产标准化选中的分值" v-model="standardizationscore"  readonly ></van-field>
+        <div><van-divider /></div>
+
+        <!--隐患自查自报-->
+        <van-row type="flex">
+            <van-field name="hiddendangerradio" label="隐患自查自报" >
+                <template #input>
+                    <van-radio-group v-model="hiddendangerradio" direction="vertical">
+                        <van-radio name="有自查自报并上传到系统">有自查自报并上传到系统</van-radio>
+                        <van-radio name="有自查自报，但未上传">有自查自报，但未上传</van-radio>
+                        <van-radio name="未进行自查自报">未进行自查自报</van-radio>
+                    </van-radio-group>
+                </template>
+            </van-field>
+            <div>
+                <!--上传图片-->
+                <van-field name="hiddendangeruploader"  >
+                    <template #input>
+                        <van-uploader  v-model="hiddendangeruploader"  />
+                    </template>
+                </van-field>
+            </div>
+        </van-row>
+            <van-field label="隐患自查自报选项分值" placeholder="隐患自查自报选中分值" v-model="hiddendangerscore" readonly ></van-field>
+        <div><van-divider /></div>
+
+        <!--安全教育培训情况-->
+        <van-row type="flex">
+            <van-field name="trainradio" label="安全教育培训情况" >
+                <template #input>
+                    <van-radio-group v-model="trainradio" direction="vertical">
+                        <van-radio name="无三级培训">无三级培训</van-radio>
+                        <van-radio name="有三级培训但不完善">有三级培训但不完善</van-radio>
+                        <van-radio name="三级培训完善">三级培训完善</van-radio>
+                    </van-radio-group>
+                </template>
+            </van-field>
+            <div>
+                <!--上传图片-->
+                <van-field name="trainuploader"  >
+                    <template #input>
+                        <van-uploader  v-model="trainuploader"  />
+                    </template>
+                </van-field>
+            </div>
+        </van-row>
+            <van-field label="安全教育培训情况选项分值" placeholder="安全教育培训情况选中分值" v-model="trainscore" readonly ></van-field>
+            <div><van-divider /></div>
+
+            <!-- 提交表单按钮-->
+            <div style="margin: 16px;">
+                <van-button round block type="info" native-type="submit" >
+                    提交
+                </van-button>
+            </div>
+        </van-form>
+        <van-overlay :show="show" @click="show = false">
+            <div class="wrapper" @click.stop>
+                <div class="block">
+                    <div>
+                        <van-loading type="spinner" color="#1989fa" />
+
+                        <div>上传中</div>
+                    </div>
+                </div>
+            </div>
+        </van-overlay>
+    </div>
+</body>
+<!-- 引入 Vue 和 Vant 的 JS 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            standardizationradio: '',
+            standardizationuploader: [],
+
+            hiddendangerradio: '',
+            hiddendangeruploader: [],
+
+            trainradio: '',
+            trainuploader: [],
+
+            scoredata: '',
+            show: false,
+
+            standardizationscore: '',
+            hiddendangerscore: '',
+            trainscore: '',
+            possibilityofaccidentscore: [],
+            prescore: '',
+
+        },
+
+        mounted() {
+            // 获取上一页传来的分数
+            var myscore = new Object();
+            myscore = getUrlParam();
+            this.prescore = Number(myscore['score']);
+            console.log(this.prescore)
+
+            function getUrlParam() {
+                var url = location.search; //获取url中"?"符后的字符串包括‘？’ ，window.location.href获取的是url完整的字符串
+                var theParam = new Object();
+                if (url.indexOf("?") != -1) { //确保‘？’不是最后一个字符串，即携带的参数不为空
+                    var str = url.substr(1); //substr是字符串的用法之一，抽取指定字符的数目，这里抽取？后的所有字符
+                    strs = str.split("&"); //将获取到的字符串从&分割，输出参数数组，即输出[参数1=xx,参数2=xx,参数3=xx,...]的数组形式
+                    for(var i = 0; i < strs.length; i ++) { //遍历参数数组
+                        theParam[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]); //这里意思是抽取每个参数等号后面的值，unescape是解码的意思
+                    }
+                }
+                return theParam; //返回参数值
+            }
+
+            axios({
+                url: '/get/all/score',
+                mtthods: 'get',
+            }).then(function (response) {
+                if (response.data.result=='SUCCESS'){
+                    vm.scoredata = response.data.data
+
+                }
+            })
+
+        },
+        watch: {
+
+            standardizationradio: function (val) {
+                this.scoredata.forEach((item)=>{
+                    if(item.name == val){
+                        //console.log(item.score);
+                        vm.standardizationscore = item.score;
+
+                        //this.possibilityofaccidentscore.length=0
+                        //alert(this.possibilityofaccidentscore)
+                        return false;
+                    }
+                })
+
+            },
+            hiddendangerradio: function(val){
+                // this.possibilityofaccidentscore.push(this.possibilityofaccidentscoreone);
+                this.scoredata.forEach((item)=>{
+                    if(item.name == val){
+                        // console.log(item.score);
+                        vm.hiddendangerscore = item.score;
+
+                        return false;
+                    }
+                })
+            },
+            trainradio: function (val) {
+                this.scoredata.forEach((item)=>{
+                    if (item.name == val){
+                        vm.trainscore = item.score;
+                    }
+                })
+
+            }
+        },
+        methods: {
+
+            onSubmit(values){
+                // 判断是否有选项未选中
+                if (this.standardizationradio==''||this.hiddendangerradio==''||this.trainradio==''){
+                    vant.Dialog.alert({
+                        message: '请检查是否有选项未选！选择后在提交!',
+                    }).then(() => {
+                        // on close
+                    });
+                    return false;
+                }
+                this.show=true
+
+
+                // 7.生产安全标准化
+                if (this.standardizationuploader.length > 0) {
+                    var standardizationlist = '';
+                    for (var i = 0; i < this.standardizationuploader.length; i++) {
+                        var standardizationphoto = this.standardizationuploader[i].content;
+                        standardizationlist = standardizationlist + "#" + standardizationphoto;
+                    }
+                }
+
+                // 8.隐患自查自报
+                if (this.hiddendangeruploader.length > 0) {
+                    var hiddendangerphotolist = '';
+                    for(var i=0; i<this.hiddendangeruploader.length;i++){
+                        var hiddendangerphoto = this.hiddendangeruploader[i].content;
+                        hiddendangerphotolist=hiddendangerphotolist+"#"+hiddendangerphoto;
+                    }
+                }
+
+                // 9.安全教育
+                if (this.trainuploader.length > 0) {
+                    var trainphotolist = '';
+                    for(var i=0; i<this.trainuploader.length;i++){
+                        var trainphoto = this.trainuploader[i].content;
+                        trainphotolist=trainphotolist+"#"+trainphoto;
+                    }
+                }
+
+                var list = [
+                    {
+                        "categoryId": "2",
+                        "influenceFactorId": "7",
+                        "determineFactor": this.standardizationradio,
+                        "photo": standardizationlist
+                    },
+
+                    {
+                        "categoryId": "2",
+                        "influenceFactorId": "8",
+                        "determineFactor": this.hiddendangerradio,
+                        "photo": hiddendangerphotolist
+                    },
+                    {
+                        "categoryId": "2",
+                        "influenceFactorId": "9",
+                        "determineFactor": this.trainradio,
+                        "photo": trainphotolist
+                    }
+                ];
+                //alert("事故可能性总分为："+this.standardizationscore + this.hiddendangerscore + this.trainscore)
+                vant.Dialog.alert({
+                    title: '事故可能性总分',
+                    message: this.standardizationscore + this.hiddendangerscore+ this.trainscore,
+                }).then(() => {
+                    // on close
+
+                axios({
+                    url: '/save/concrete/evaluation',
+                    method: 'post',
+                    data: list
+                }).then(function (response) {
+                    if (response.result = "SUCCESS") {
+                        //vant.Toast.success('录入成功',window.location.href = "http://localhost:8080/thenumberofemployees.html");
+                        var score = vm.standardizationscore+vm.hiddendangerscore+vm.trainscore;
+                        var prescore = vm.prescore
+                        window.location.href = "http://localhost:8080/thenumberofemployees.html?score="+ score+"&quencesscore="+prescore;
+                    }
+                }).catch(function (response) {
+                    if (response.result = "FAILED") {
+                        //vant.Toast.fail('录入失败，请重新录入',window.location.href = "http://localhost:8080/possibilityofaccident.html");
+                        window.location.href = "http://localhost:8080/possibilityofaccident.html";
+                    }
+                })
+                });
+            },
+        }
+    });
+    /*vm.$watch('standardizationradio',function (scoredata) {
+        alert(vm.standardizationradio);
+        console.log(scoredata)
+    });
+    vm.$watch('hiddendangerradio',function(val){
+        alert(vm.hiddendangerradio);
+        console.log(vm.scoredata)
+    })*/
+</script>
+</html>

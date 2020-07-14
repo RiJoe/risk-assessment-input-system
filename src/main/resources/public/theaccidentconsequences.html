@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>事故后果</title>
+    <!-- 引入样式文件 -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"
+    />
+    <style>
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .block {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center;     /* 垂直居中 */
+            width: 120px;
+            height: 120px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div>
+        <van-sticky>
+            <van-nav-bar
+                    title="事故后果"
+            />
+        </van-sticky>
+    </div>
+    <van-form @submit="onSubmit">
+        <!--重大危险源-->
+        <van-row type="flex">
+            <van-field name="radio" label="重大危险源">
+                <template #input>
+                    <van-radio-group v-model="radio" direction="vertical">
+                        <van-radio name="一级">一级</van-radio>
+                        <van-radio name="二级">二级</van-radio>
+                        <van-radio name="三级">三级</van-radio>
+                        <van-radio name="四级">四级</van-radio>
+                        <van-radio name="无">无</van-radio>
+                    </van-radio-group>
+
+                </template>
+            </van-field>
+            <div>
+                <!--上传图片-->
+                <van-field name="hazardsuploader"  >
+                    <template #input>
+                        <van-uploader  v-model="hazardsuploader" />
+                    </template>
+                </van-field>
+            </div>
+        </van-row>
+        <van-field label="重大危险源分值" placeholder="重大危险源选中分值" v-model="hazardsscore" readonly ></van-field>
+    <div><van-divider /></div>
+        <!--特种设备-->
+        <van-field name="specialequipmentcheckboxGroup" label="特种设备">
+            <template #input>
+                <van-checkbox-group v-model="specialequipmentcheckboxGroup" direction="vertical">
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="锅炉" shape="square">锅炉</van-checkbox>
+                        <div>
+                            <van-field name="specialequipmentuploader1"  >
+                                <template #input>
+                                    <van-uploader  v-model="specialequipmentuploader1"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="压力容器" shape="square">压力容器</van-checkbox>
+                        <div>
+                            <van-field name="specialequipmentuploader2"  >
+                                <template #input>
+                                    <van-uploader  v-model="specialequipmentuploader2"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="其他" shape="square">其他（电梯）</van-checkbox>
+                        <div>
+                            <van-field name="specialequipmentuploader3"  >
+                                <template #input>
+                                    <van-uploader  v-model="specialequipmentuploader3"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="无" shape="square">无</van-checkbox>
+                        <div>
+                            <van-field name="specialequipmentuploader4"  >
+                                <template #input>
+                                    <van-uploader  v-model="specialequipmentuploader4"  preview-size="20px" disabled/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                </van-checkbox-group>
+            </template>
+        </van-field>
+        <van-field label="特种设备分值" placeholder="特种设备选中总分值" v-model="specialequipmentscore" readonly ></van-field>
+        <div><van-divider /></div>
+
+        <!--危险设施设备-->
+        <van-field name="hazardouslequipmentcheckboxGroup" label="危险设施设备">
+            <template #input>
+                <van-checkbox-group v-model="hazardouslequipmentcheckboxGroup" direction="vertical">
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="洁净车间" shape="square">洁净车间</van-checkbox>
+                        <div>
+                            <van-field name="hazardouslequipmentuploader1"  >
+                                <template #input>
+                                    <van-uploader  v-model="hazardouslequipmentuploader1"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="砂光机" shape="square">砂光机</van-checkbox>
+                        <div>
+                            <van-field name="hazardouslequipmentuploader2"  >
+                                <template #input>
+                                    <van-uploader  v-model="hazardouslequipmentuploader2"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="冲剪压机械" shape="square">冲剪压机械</van-checkbox>
+                        <div>
+                            <van-field name="punchinguploader5"  >
+                                <template #input>
+                                    <van-uploader  v-model="punchinguploader5"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="烤箱" shape="square">烤箱</van-checkbox>
+                        <div>
+                            <van-field name="hazardouslequipmentuploader3"  >
+                                <template #input>
+                                    <van-uploader  v-model="hazardouslequipmentuploader3"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="无" shape="square">无</van-checkbox>
+                        <div>
+                            <van-field name="hazardouslequipmentuploader4"  >
+                                <template #input>
+                                    <van-uploader  v-model="hazardouslequipmentuploader4"  preview-size="20px" disabled/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                </van-checkbox-group>
+            </template>
+        </van-field>
+        <van-field label="危险设施设备分值" placeholder="危险设施设备选中总分值" v-model="hazardouslequipmentscore" readonly ></van-field>
+        <div><van-divider /></div>
+
+        <!--危险化学品-->
+        <van-row type="flex">
+        <van-field name="hazardouschemicalsradio" label="危险化学品">
+            <template #input>
+                <van-radio-group v-model="hazardouschemicalsradio" direction="vertical">
+                    <van-radio name="危险化学品">危险化学品名称（闪点）、最大存量</van-radio>
+                    <van-radio name="无">无</van-radio>
+                </van-radio-group>
+            </template>
+        </van-field>
+        <div>
+            <!--上传图片-->
+            <van-field name="hazardouschemicalsuploader"  >
+                <template #input>
+                    <van-uploader  v-model="hazardouschemicalsuploader"  />
+                </template>
+            </van-field>
+        </div>
+        </van-row>
+        <van-field
+                v-model="remark"
+                rows="1"
+                autosize
+                label="危险化学品（具体情况）"
+                type="textarea"
+                placeholder="请输入化学品具体情况"
+        >
+        </van-field>
+        <van-field label="危险化学品分值" placeholder="危险化学品选中总分值" v-model="hazardouschemicalsscore" readonly ></van-field>
+        <div><van-divider /></div>
+
+        <!--危险工艺-->
+        <van-field name="checkboxGroup" label="危险工艺">
+            <template #input>
+                <van-checkbox-group v-model="checkboxGroup" direction="vertical">
+                    <van-row type="flex" justify="space-between">
+                    <van-checkbox name="铝镁粉尘" shape="square">铝镁粉尘</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader1"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader1"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="木粉尘" shape="square">其他粉尘</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader2"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader2"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="涉氨" shape="square">涉氨</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader3"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader3"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="有限空间" shape="square">有限空间</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader4"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader4"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="喷漆喷油" shape="square">喷漆喷油</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader5"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader5"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="涂层烘干" shape="square">涂层烘干</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader6"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader6"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="锂离子电池" shape="square">锂离子电池</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader7"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader7"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="高温熔融" shape="square">高温熔融</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader8"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader8"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="使用排风管道" shape="square">使用排风管道</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader9"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader9"  preview-size="20px"/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+                    <van-row type="flex" justify="space-between">
+                        <van-checkbox name="无" shape="square">无</van-checkbox>
+                        <div>
+                            <van-field name="dangerousuploader10"  >
+                                <template #input>
+                                    <van-uploader  v-model="dangerousuploader10"  preview-size="20px" disabled/>
+                                </template>
+                            </van-field>
+                        </div>
+                    </van-row>
+
+                </van-checkbox-group>
+            </template>
+        </van-field>
+        <van-field label="危险工艺分值" placeholder="危险选项选中总分值" v-model="dangerousscore" readonly ></van-field>
+        <div><van-divider /></div>
+       <!-- 应急反应-->
+        <van-row type="flex">
+            <van-field name="emergencyresponseradio" label="应急反应">
+                <template #input>
+                    <van-radio-group v-model="emergencyresponseradio" direction="vertical">
+                        <van-radio name="无预案无演练">无预案无演练</van-radio>
+                        <van-radio name="有预案无演练">有预案无演练</van-radio>
+                        <van-radio name="有预案有演练">有预案有演练</van-radio>
+                    </van-radio-group>
+
+                </template>
+            </van-field>
+            <div>
+                <!--上传图片-->
+                <van-field name="emergencyresponseuploader"  >
+                    <template #input>
+                        <van-uploader  v-model="emergencyresponseuploader"  />
+                    </template>
+                </van-field>
+            </div>
+        </van-row>
+        <van-field label="应急反应分值" placeholder="应急反应选中总分值" v-model="emergencyresponsescore" readonly ></van-field>
+        <div><van-divider /></div>
+        <div style="margin: 16px;">
+            <van-button round block type="info" native-type="submit">
+                提交
+            </van-button>
+        </div>
+    </van-form>
+    <van-overlay :show="show" @click="show = false">
+        <div class="wrapper" @click.stop>
+            <div class="block">
+                <div>
+                    <van-loading type="spinner" color="#1989fa" />
+
+                    <div>上传中</div>
+                </div>
+            </div>
+        </div>
+    </van-overlay>
+</div>
+</body>
+<!-- 引入 Vue 和 Vant 的 JS 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            show: false,
+            // 重大危险源
+            hazardsuploader: [],
+            radio: '',
+
+            // 危险工艺
+            dangerousuploader1: [],
+            dangerousuploader2: [],
+            dangerousuploader3: [],
+            dangerousuploader4: [],
+            dangerousuploader5: [],
+            dangerousuploader6: [],
+            dangerousuploader7: [],
+            dangerousuploader8: [],
+            dangerousuploader9: [],
+            dangerousuploader10: [],
+            checkboxGroup: [],
+
+            // 特种设备
+            specialequipmentcheckboxGroup: [],
+            specialequipmentuploader1: [],
+            specialequipmentuploader2: [],
+            specialequipmentuploader3: [],
+            specialequipmentuploader4: [],
+
+            // 危险设施设备
+            hazardouslequipmentcheckboxGroup: [],
+            hazardouslequipmentuploader1: [],
+            hazardouslequipmentuploader2: [],
+            hazardouslequipmentuploader3: [],
+            hazardouslequipmentuploader4: [],
+            punchinguploader5: [],
+
+            // 危险化学品
+            hazardouschemicalsradio: '',
+            hazardouschemicalsuploader: [],
+
+            // 应急反应
+            emergencyresponseradio: '',
+            emergencyresponseuploader: [],
+
+            remark: '',
+            // 选项分值
+            scoredata: '',
+            hazardsscore: '',
+            dangerousscore: '',
+            specialequipmentscore: '',
+            hazardouslequipmentscore: '',
+            hazardouschemicalsscore: '',
+            emergencyresponsescore: '',
+
+
+
+        },
+        mounted(){
+            axios({
+                url: '/get/all/score',
+                mtthods: 'get',
+            }).then(function (response) {
+                if (response.data.result=='SUCCESS'){
+                    vm.scoredata = response.data.data
+                }
+            })
+        },
+        watch: {
+            // 重大危险源选中分值
+            radio: function (val) {
+                this.scoredata.forEach((item) => {
+                    if (item.name == val) {
+                        vm.hazardsscore = item.score;
+
+                    }
+                })
+            },
+            // 特种设备选中总分值
+            specialequipmentcheckboxGroup: {
+
+                handler(val) {
+                    var totalscore = null;
+                    this.scoredata.forEach((item) => {
+                        for (var i = 0; i < val.length; i++) {
+                            if (item.name == val[i]) {
+                                totalscore = totalscore + item.score
+                                vm.specialequipmentscore = totalscore
+                            }
+                        }
+                    })
+                    if (val == ''){
+                        vm.specialequipmentscore =0
+                    }
+                }
+            },
+            // 危险设施设备
+            hazardouslequipmentcheckboxGroup: {
+                handler(val) {
+                    var totalscore = null;
+                    this.scoredata.forEach((item) => {
+                        for (var i = 0; i < val.length; i++) {
+                            if (item.name == val[i]) {
+                                totalscore = totalscore + item.score
+                                vm.hazardouslequipmentscore = totalscore
+                            }
+                        }
+                    })
+                    if (val == ''){
+                        vm.hazardouslequipmentscore =0
+                    }
+                }
+            },
+            // 危险化学品
+            hazardouschemicalsradio: function (val) {
+                this.scoredata.forEach((item) => {
+                    if (item.name == val) {
+                        vm.hazardouschemicalsscore = item.score;
+
+                    }
+                })
+            },
+            // 危险工艺选中总分值
+            checkboxGroup: {
+                handler(val) {
+                    var totalscore = null;
+                    this.scoredata.forEach((item) => {
+
+                        for (var i = 0; i < val.length; i++) {
+                            if (item.name == val[i]) {
+                                totalscore = totalscore + item.score
+                                vm.dangerousscore = totalscore
+                            }
+                        }
+                    })
+                    if (val == ''){
+                        vm.dangerousscore =0
+                    }
+                }
+
+            },
+            // 应急反应选中总分
+            emergencyresponseradio: function (val) {
+                this.scoredata.forEach((item) => {
+                    if (item.name == val) {
+                        vm.emergencyresponsescore = item.score;
+
+                    }
+                })
+            },
+        },
+        methods: {
+
+            onSubmit(values) {
+                // 判断是否有选项未选中
+                if(
+
+                    this.radio== ''||
+                    this.specialequipmentcheckboxGroup.length == ''||
+                    this.hazardouslequipmentcheckboxGroup.length==''||
+                    this.emergencyresponseradio==''||
+                    this.checkboxGroup.length==''||
+                    this.emergencyresponseradio==''
+
+                ){
+                    vant.Dialog.alert({
+                        message: '请检查是否有选项未选！选择后在提交!',
+                    }).then(() => {
+                        // on close
+                    });
+                    return false;
+
+                }
+
+                this.show = true
+
+                // 把每一项的值以对象的形式存进数组作为data传给后端
+                var accidentconsequencecollection = [];
+                // 1.重大危险源
+
+                var hazardphotolist = '';
+                if(this.hazardsuploader.length>0){
+
+                    for(var i=0; i<this.hazardsuploader.length;i++){
+                        var hazardphoto = this.hazardsuploader[i].content;
+                        hazardphotolist = hazardphotolist+"#"+hazardphoto;
+                    }
+                }
+                if(this.radio !=''){
+                    var hazard = {"categoryId": "1","influenceFactorId":"1","determineFactor":this.radio,"photo":hazardphotolist}
+                    accidentconsequencecollection.push(hazard)
+                }
+
+
+                // 2.特种设备
+
+                this.specialequipmentcheckboxGroup.forEach((item,index) =>{
+                    if(item == "锅炉"){
+                        var specialequipmentphoto1list = '';
+                        if(this.specialequipmentuploader1.length>0){
+
+                            for(var i=0; i<this.specialequipmentuploader1.length;i++){
+                                var specialequipmentphoto1 = this.specialequipmentuploader1[i].content;
+                                specialequipmentphoto1list=specialequipmentphoto1list+"#"+specialequipmentphoto1;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":specialequipmentphoto1list})
+                        return false;
+                    }
+                    if (item == "压力容器"){
+                        var specialequipmentphoto2list = '';
+                        if(this.specialequipmentuploader2.length>0){
+
+                            for(var i=0; i<this.specialequipmentuploader2.length;i++){
+                                var specialequipmentphoto2 = this.specialequipmentuploader2[i].content;
+                                specialequipmentphoto2list=specialequipmentphoto2list+"#"+specialequipmentphoto2;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":specialequipmentphoto2list})
+                        return false;
+                    }
+                    if(item == "其他"){
+                        var specialequipmentphoto3list = '';
+                        if(this.specialequipmentuploader3.length>0){
+
+                            for(var i=0; i<this.specialequipmentuploader3.length;i++){
+                                var specialequipmentphoto3 = this.specialequipmentuploader3[i].content;
+                                specialequipmentphoto3list=specialequipmentphoto3list+"#"+specialequipmentphoto3;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":specialequipmentphoto3list})
+                        return false;
+                    }
+                    if(item == "无"){
+                        var specialequipmentphoto4list = '';
+                        if(this.specialequipmentuploader4.length>0){
+
+                            for(var i=0; i<this.specialequipmentuploader4.length;i++){
+                                var specialequipmentphoto4 = this.specialequipmentuploader2[i].content;
+                                specialequipmentphoto4list=specialequipmentphoto4list+"#"+specialequipmentphoto4;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":specialequipmentphoto4list})
+                        return false;
+                    }
+
+
+                })
+
+
+                // 3.危险设施设备
+
+                this.hazardouslequipmentcheckboxGroup.forEach((item,index)=>{
+                    if(item == "洁净车间"){
+                        var hazardouslequipmentphoto1list = '';
+                        if(this.hazardouslequipmentuploader1.length>0){
+
+                            for(var i=0; i<this.hazardouslequipmentuploader1.length;i++){
+                                var hazardouslequipmentphoto1 = this.hazardouslequipmentuploader1[i].content;
+                                hazardouslequipmentphoto1list=hazardouslequipmentphoto1list+"#"+hazardouslequipmentphoto1;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":hazardouslequipmentphoto1list})
+                        return false;
+                    }
+                    if(item == "砂光机"){
+                        var hazardouslequipmentphoto2list = '';
+                        if(this.hazardouslequipmentuploader2.length>0){
+
+                            for(var i=0; i<this.hazardouslequipmentuploader2.length;i++){
+                                var hazardouslequipmentphoto2 = this.hazardouslequipmentuploader2[i].content;
+                                hazardouslequipmentphoto2list=hazardouslequipmentphoto2list+"#"+hazardouslequipmentphoto2;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":hazardouslequipmentphoto2list})
+                        return false;
+                    }
+                    if(item == "冲剪压机械"){
+                        var punchingphotolist = '';
+                        if(this.punchinguploader5.length>0){
+
+                            for(var i=0; i<this.punchinguploader5.length;i++){
+                                var punchingphoto = this.punchinguploader5[i].content;
+                                punchingphotolist=punchingphotolist+"#"+punchingphoto;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":punchingphotolist})
+                        return false;
+                    }
+                    if(item == "烤箱"){
+                        var hazardouslequipmentphoto3list = '';
+                        if(this.hazardouslequipmentuploader3.length>0){
+
+                            for(var i=0; i<this.hazardouslequipmentuploader3.length;i++){
+                                var hazardouslequipmentphoto3 = this.hazardouslequipmentuploader3[i].content;
+                                hazardouslequipmentphoto3list=hazardouslequipmentphoto3list+"#"+hazardouslequipmentphoto3;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":hazardouslequipmentphoto3list})
+                        return false;
+                    }
+                    if(item == "无"){
+                        var hazardouslequipmentphoto4list = '';
+                        if(this.hazardouslequipmentuploader4.length>0){
+
+                            for(var i=0; i<this.hazardouslequipmentuploader4.length;i++){
+                                var hazardouslequipmentphoto4 = this.hazardouslequipmentuploader4[i].content;
+                                hazardouslequipmentphoto4list=hazardouslequipmentphoto4list+"#"+hazardouslequipmentphoto4;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":hazardouslequipmentphoto4list})
+                        return false;
+                    }
+                })
+
+                // 4.危险化学品
+                var hazardouschemicalsphotolist = '';
+                if(this.hazardouschemicalsuploader.length>0){
+
+                    for(var i=0; i<this.hazardouschemicalsuploader.length;i++){
+                        var hazardouschemicalsphoto = this.hazardouschemicalsuploader[i].content;
+                        hazardouschemicalsphotolist = hazardouschemicalsphotolist+"#"+hazardouschemicalsphoto;
+                    }
+
+                }
+                if(this.hazardouschemicalsradio !=''){
+                    var hazardouschemicals = {"categoryId": "1","influenceFactorId":"4","determineFactor":this.hazardouschemicalsradio,"photo":hazardouschemicalsphotolist,"remark":this.remark}
+                    accidentconsequencecollection.push(hazardouschemicals)
+                }
+
+
+
+
+                // 5.危险工艺
+                this.checkboxGroup.forEach((item,index)=>{
+                    if(item == "铝镁粉尘"){
+                        var dangerousphoto1list = '';
+                        if(this.dangerousuploader1.length>0){
+
+                            for(var i=0; i<this.dangerousuploader1.length;i++){
+                                var dangerousphoto1 = this.dangerousuploader1[i].content;
+                                dangerousphoto1list=dangerousphoto1list+"#"+dangerousphoto1;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto1list})
+                        return false;
+                    }
+                    if(item == "木粉尘"){
+                        var dangerousphoto2list = '';
+                        if(this.dangerousuploader2.length>0){
+
+                            for(var i=0; i<this.dangerousuploader2.length;i++){
+                                var dangerousphoto2 = this.dangerousuploader2[i].content;
+                                dangerousphoto2list=dangerousphoto2list+"#"+dangerousphoto2;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto2list})
+                        return false;
+                    }
+                    if(item == "涉氨"){
+                        var dangerousphoto3list = '';
+                        if(this.dangerousuploader3.length>0){
+
+                            for(var i=0; i<this.dangerousuploader3.length;i++){
+                                var dangerousphoto3 = this.dangerousuploader3[i].content;
+                                dangerousphoto3list=dangerousphoto3list+"#"+dangerousphoto3;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto3list})
+                        return false;
+                    }
+                    if(item == "有限空间"){
+                        var dangerousphoto4list = '';
+                        if(this.dangerousuploader4.length>0){
+
+                            for(var i=0; i<this.dangerousuploader4.length;i++){
+                                var dangerousphoto4 = this.dangerousuploader4[i].content;
+                                dangerousphoto4list=dangerousphoto4list+"#"+dangerousphoto4;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto4list})
+                        return false;
+                    }
+                    if(item == "喷漆喷油"){
+                        var dangerousphoto5list = '';
+                        if(this.dangerousuploader5.length>0){
+
+                            for(var i=0; i<this.dangerousuploader5.length;i++){
+                                var dangerousphoto5 = this.dangerousuploader5[i].content;
+                                dangerousphoto5list=dangerousphoto5list+"#"+dangerousphoto5;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto5list})
+                        return false;
+                    }
+                    if(item == "涂层烘干"){
+                        var dangerousphoto6list = '';
+                        if(this.dangerousuploader6.length>0){
+
+                            for(var i=0; i<this.dangerousuploader6.length;i++){
+                                var dangerousphoto6 = this.dangerousuploader6[i].content;
+                                dangerousphoto6list=dangerousphoto6list+"#"+dangerousphoto6;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto6list})
+                        return false;
+                    }
+                    if(item == "锂离子电池"){
+                        var dangerousphoto7list = '';
+                        if(this.dangerousuploader7.length>0){
+
+                            for(var i=0; i<this.dangerousuploader7.length;i++){
+                                var dangerousphoto7 = this.dangerousuploader7[i].content;
+                                dangerousphoto7list=dangerousphoto7list+"#"+dangerousphoto7;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto7list})
+                        return false;
+                    }if(item == "高温熔融"){
+                        var dangerousphoto8list = '';
+                        if(this.dangerousuploader8.length>0){
+
+                            for(var i=0; i<this.dangerousuploader8.length;i++){
+                                var dangerousphoto8 = this.dangerousuploader8[i].content;
+                                dangerousphoto8list=dangerousphoto8list+"#"+dangerousphoto8;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto8list})
+                        return false;
+                    }
+                    if(item == "使用排风管道"){
+                        var dangerousphoto9list = '';
+                        if(this.dangerousuploader9.length>0){
+
+                            for(var i=0; i<this.dangerousuploader9.length;i++){
+                                var dangerousphoto9 = this.dangerousuploader9[i].content;
+                                dangerousphoto9list=dangerousphoto9list+"#"+dangerousphoto9;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto9list})
+                        return false;
+                    }
+                    if(item == "无"){
+                        var dangerousphoto10list = '';
+                        if(this.dangerousuploader10.length>0){
+
+                            for(var i=0; i<this.dangerousuploader10.length;i++){
+                                var dangerousphoto10 = this.dangerousuploader10[i].content;
+                                dangerousphoto10list=dangerousphoto10list+"#"+dangerousphoto10;
+                            }
+                        }
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto10list})
+                        return false;
+                    }
+
+
+                })
+
+                // 6.应急反应
+                var emergencyresponsephotolist = '';
+                if(this.emergencyresponseuploader.length>0){
+
+                    for(var i=0; i<this.emergencyresponseuploader.length;i++){
+                        var emergencyresponsephoto = this.emergencyresponseuploader[i].content;
+                        emergencyresponsephotolist=emergencyresponsephotolist+"#"+emergencyresponsephoto;
+                    }
+                }
+                if(this.emergencyresponseradio !=''){
+                    var emergencyresponse = {"categoryId": "1","influenceFactorId":"6","determineFactor":this.emergencyresponseradio,"photo":emergencyresponsephotolist}
+                    accidentconsequencecollection.push(emergencyresponse)
+                }
+                vant.Dialog.alert({
+                    title: '事故后果总分',
+                    message:
+                        this.hazardsscore +
+                        this.dangerousscore +
+                        this.specialequipmentscore +
+                        this.hazardouslequipmentscore +
+                        this.hazardouschemicalsscore +
+                        this.emergencyresponsescore
+                }).then(() => {
+                    // on close
+                    axios({
+                        method: 'post',
+
+                        url: '/save/accident/consequence',
+                        data: accidentconsequencecollection,
+
+
+                    }).then(function (response) {
+                        if (response.result = "SUCCESS") {
+                            //vant.Toast.success('录入成功,请录入事故可能性',window.location.href = "http://localhost:8080/possibilityofaccident.html");
+                            // 把选中分数传给下一页
+                            var score =
+                                vm.hazardsscore +
+                                vm.dangerousscore +
+                                vm.specialequipmentscore +
+                                vm.hazardouslequipmentscore +
+                                vm.hazardouschemicalsscore +
+                                vm.emergencyresponsescore
+                            window.location.href = "http://localhost:8080/possibilityofaccident.html?score="+ score;
+                        }
+                    }).catch(function (response) {
+                        if (response.result = "FAILED") {
+                            //vant.Toast.fail('录入失败，请重新录入',window.location.href = "http://localhost:8080/theaccidentconsequences.html");
+                            window.location.href = "http://localhost:8080/theaccidentconsequences.html";
+                        }
+                    })
+                });
+            },
+        }
+    })
+</script>
+</html>

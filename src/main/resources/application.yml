@@ -1,0 +1,19 @@
+server:
+  port: 7000
+
+spring:
+  datasource:
+    name: mydb
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/risk_assessment?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath*:/mybatis/mapper/*Mapper.xml
+
+logging:
+  level:
+    com.dasanti.riskassessmentinputsystem.mapper: debug
+    com.dasanti.riskassessmentinputsystem.test: debug
