@@ -8,6 +8,7 @@ import com.dasanti.riskassessmentinputsystem.util.ResultEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -70,5 +71,11 @@ public class EnterpriseController {
             return ResultEntity.failed(e.getMessage());
         }
 
+    }
+    @RequestMapping("/get/file/path")
+    @ResponseBody
+    public String testFile(MultipartFile file){
+        System.out.println(file);
+        return "yes";
     }
 }

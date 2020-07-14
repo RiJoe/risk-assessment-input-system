@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Title</title>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/vant@2.6/lib/index.css"
+    />
+</head>
+<body>
+    <div id="app">
+    <van-uploader :after-read="afterRead" v-model="fileList" multiple />
+    </div>
+</body>
+<!-- 引入 Vue 和 Vant 的 JS 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.6/lib/vant.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            fileList: [],
+        },
+        methods: {
+            afterRead(file) {
+                // 此时可以自行将文件上传至服务器
+                console.log(file.file);
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: file.file
+                }).then(function (response){
+                    console.log(response)
+                })
+
+            },
+        },
+    });
+</script>
+</html>
