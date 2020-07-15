@@ -1,17 +1,23 @@
 package com.dasanti.riskassessmentinputsystem.controller;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.dasanti.riskassessmentinputsystem.entity.Enterprise;
 import com.dasanti.riskassessmentinputsystem.service.EnterpriseService;
 import com.dasanti.riskassessmentinputsystem.util.ResultEntity;
+import com.dasanti.riskassessmentinputsystem.util.UploadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 @Controller
@@ -72,10 +78,20 @@ public class EnterpriseController {
         }
 
     }
+    // 保存图片路径
     @RequestMapping("/get/file/path")
     @ResponseBody
-    public String testFile(MultipartFile file){
-        System.out.println(file);
-        return "yes";
+    public String testFile(@RequestParam MultipartFile file) {
+        String src = "";
+        if (file != null && file.getName() != null && !file.isEmpty()){
+            try{
+                src = UploadUtil.fileIpload(file);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+        return src;
     }
 }
