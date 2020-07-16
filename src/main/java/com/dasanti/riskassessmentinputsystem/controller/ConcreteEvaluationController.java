@@ -152,7 +152,6 @@ public class ConcreteEvaluationController {
                 // System.out.print(determineFactorsList.get(i).getScore());
                 list.add(determineFactorsList.get(i).getScore());
             }
-            System.out.println(sum);
             return ResultEntity.successWithData(list);
         }catch(Exception e){
             e.printStackTrace();
@@ -167,7 +166,6 @@ public class ConcreteEvaluationController {
         /*for(int i=0;i<scoreList.size();i++){
 
         }*/
-        System.out.println(scoreList);
         return ResultEntity.successWithData(scoreList);
     }
 }

@@ -9,7 +9,7 @@ import java.io.File;
 
 
 public class UploadUtil {
-    public static String fileIpload(MultipartFile file){
+    public static ResultEntity<String> fileIpload(MultipartFile file){
         String oldName = file.getOriginalFilename();
         String UUID = IdUtil.randomUUID();
         String newName = UUID+oldName;
@@ -32,6 +32,6 @@ public class UploadUtil {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return src;
+        return ResultEntity.successWithData(src);
     }
 }

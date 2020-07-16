@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -76,17 +77,23 @@ public class EnterpriseController {
     // 保存图片路径
     @RequestMapping("/get/file/path")
     @ResponseBody
-    public String testFile(@RequestParam MultipartFile file) {
+    public ResultEntity<String> testFile(@RequestParam List<MultipartFile> file) {
         String src = "";
-        if (file != null && file.getName() != null && !file.isEmpty()){
-            try{
-                src = UploadUtil.fileIpload(file);
+        for(int i=0;i<file.size();i++){
+            if (file != null && file.get(i).getName() != null && !file.isEmpty()){
+                try{
+                    ResultEntity<String> filePath = UploadUtil.fileIpload(file.get(i));
+                    if(filePath.getResult()=="SUCCESS"){
+                        src = "http://127.0.0.1:8089" + filePath.getData();
+                    }
+                    System.out.println(src);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
-            }catch (Exception e){
-                e.printStackTrace();
             }
-
         }
-        return src;
+
+        return ResultEntity.successWithData(src);
     }
 }

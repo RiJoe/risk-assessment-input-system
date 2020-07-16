@@ -56,7 +56,7 @@
                 <!--上传图片-->
                 <van-field name="hazardsuploader"  >
                     <template #input>
-                        <van-uploader  v-model="hazardsuploader" />
+                        <van-uploader :after-read="afterRead" v-model="hazardsuploader" />
                     </template>
                 </van-field>
             </div>
@@ -367,6 +367,7 @@
             show: false,
             // 重大危险源
             hazardsuploader: [],
+            afterReadList: '',
             radio: '',
 
             // 危险工艺
@@ -421,7 +422,7 @@
         mounted(){
             axios({
                 url: '/get/all/score',
-                mtthods: 'get',
+                method: 'get',
             }).then(function (response) {
                 if (response.data.result=='SUCCESS'){
                     vm.scoredata = response.data.data
@@ -512,7 +513,23 @@
             },
         },
         methods: {
+            afterRead(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                console.log(file);
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    console.log(response.data.data)
+                    vm.afterReadList = vm.afterReadList.concat(response.data.data+",")
+                    console.log(vm.afterReadList)
+                })
 
+            },
             onSubmit(values) {
                 // 判断是否有选项未选中
                 if(
@@ -540,16 +557,28 @@
                 var accidentconsequencecollection = [];
                 // 1.重大危险源
 
-                var hazardphotolist = '';
+                /*var hazardphotolist = '';
                 if(this.hazardsuploader.length>0){
-
                     for(var i=0; i<this.hazardsuploader.length;i++){
                         var hazardphoto = this.hazardsuploader[i].content;
-                        hazardphotolist = hazardphotolist+"#"+hazardphoto;
+                        hazardphotolist = hazardphoto + ',' + hazardphotolist;
                     }
-                }
+                }*/
+                /*if(this.hazardsuploader.length>0){
+                    let fd = new FormData()
+
+                    for(let i=0;i<this.hazardsuploader.length;i++){
+                        fd = this.hazardsuploader[i].file
+                    }
+
+                    axios({
+                        url: '/get/file/path',
+                        method: 'post',
+                        data: fd
+                    })
+                }*/
                 if(this.radio !=''){
-                    var hazard = {"categoryId": "1","influenceFactorId":"1","determineFactor":this.radio,"photo":hazardphotolist}
+                    var hazard = {"categoryId": "1","influenceFactorId":"1","determineFactor":this.radio,"photo":this.hazardsuploader}
                     accidentconsequencecollection.push(hazard)
                 }
 

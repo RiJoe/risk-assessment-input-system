@@ -11,7 +11,16 @@
 </head>
 <body>
     <div id="app">
-    <van-uploader :after-read="afterRead" v-model="fileList" multiple />
+        <van-form @submit="onSubmit">
+        <div>
+            <van-uploader :after-read="afterRead" v-model="fileList" multiple/>
+        </div>
+            <div style="margin: 16px;">
+                <van-button round block type="info" native-type="submit">
+                    提交
+                </van-button>
+            </div>
+        </van-form>
     </div>
 </body>
 <!-- 引入 Vue 和 Vant 的 JS 文件 -->
@@ -23,9 +32,14 @@
         el: "#app",
         data: {
             fileList: [],
+            testPhoto: ''
         },
         methods: {
+            onSubmit(){
+                console.log(this.fileList)
+            },
             afterRead(file) {
+                let vm = this
                 // 此时可以自行将文件上传至服务器
                 console.log(file);
                 const fd = new FormData()
@@ -35,7 +49,10 @@
                     method: 'post',
                     data: fd
                 }).then(function (response){
-                    console.log(response)
+
+                    vm.testPhoto = vm.testPhoto.concat(response.data.data + ',')
+                    console.log(vm.testPhoto)
+                    //vm.testPhoto.split(',').map(s=>{return 'http://127.0.0.1:8089' + s})
                 })
 
             },
