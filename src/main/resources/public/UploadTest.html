@@ -32,7 +32,9 @@
         el: "#app",
         data: {
             fileList: [],
-            testPhoto: []
+            testPhoto: [],
+            aa: [],
+            bb: ''
         },
         /*watch: {
             fileList: function(val){
@@ -62,8 +64,8 @@
             },
             beforeDelete(file){
                 for (let i=0;i<this.fileList.length;i++)
-                    if (this.fileList[i] === file) this.testPhoto.split(",").splice(i,1)
-                console.log(this.testPhoto)
+                    if (this.fileList[i] === file) this.bb.split(",").splice(i,1)
+                console.log(this.bb)
 
 
                 //console.log(this.fileList)
@@ -80,8 +82,11 @@
                     method: 'post',
                     data: fd
                 }).then(function (response){
-                    vm.testPhoto = vm.testPhoto+","+response.data.data
-                    console.log(vm.testPhoto)
+                    vm.aa.push(response.data.data)
+                    vm.bb = vm.aa.join(',')
+                    //vm.testPhoto = vm.testPhoto+","+response.data.data
+                    console.log(vm.bb)
+
                     //vm.testPhoto.split(',').map(s=>{return 'http://127.0.0.1:8089' + s})
                 })
 

@@ -77,12 +77,12 @@ public class EnterpriseController {
     // 保存图片路径
     @RequestMapping("/get/file/path")
     @ResponseBody
-    public ResultEntity<String> testFile(@RequestParam List<MultipartFile> file) {
+    public ResultEntity<String> testFile(@RequestParam MultipartFile file) {
         String src = "";
-        for(int i=0;i<file.size();i++){
-            if (file != null && file.get(i).getName() != null && !file.isEmpty()){
+
+            if (file != null && file.getName() != null && !file.isEmpty()){
                 try{
-                    ResultEntity<String> filePath = UploadUtil.fileIpload(file.get(i));
+                    ResultEntity<String> filePath = UploadUtil.fileIpload(file);
                     if(filePath.getResult()=="SUCCESS"){
                         src = "http://127.0.0.1:8089" + filePath.getData();
                     }
@@ -92,7 +92,7 @@ public class EnterpriseController {
                 }
 
             }
-        }
+
 
         return ResultEntity.successWithData(src);
     }
