@@ -13,7 +13,7 @@
     <div id="app">
         <van-form @submit="onSubmit">
         <div>
-            <van-uploader :after-read="afterRead" v-model="fileList" multiple/>
+            <van-uploader :after-read="afterRead" :before-delete="beforeDelete" v-model="fileList" multiple/>
         </div>
             <div style="margin: 16px;">
                 <van-button round block type="info" native-type="submit">
@@ -32,18 +32,18 @@
         el: "#app",
         data: {
             fileList: [],
-            testPhoto: ''
+            testPhoto: []
         },
-        methods: {
-            onSubmit(){
-                console.log(this.fileList)
-            },
-            afterRead(file) {
-                let vm = this
+        /*watch: {
+            fileList: function(val){
+                for(let i=0;i<val.length;i++)
+                //console.log(val[i].file)
+                let aa = val[i].file
+                //let vm = this
                 // 此时可以自行将文件上传至服务器
-                console.log(file);
-                const fd = new FormData()
-                fd.append('file',file.file)
+                //console.log(file);
+                let fd = new FormData()
+                fd.append('file',aa)
                 axios({
                     url: '/get/file/path',
                     method: 'post',
@@ -51,6 +51,36 @@
                 }).then(function (response){
 
                     vm.testPhoto = vm.testPhoto.concat(response.data.data + ',')
+                    //console.log(vm.testPhoto)
+                    //vm.testPhoto.split(',').map(s=>{return 'http://127.0.0.1:8089' + s})
+                })
+            }
+        },*/
+        methods: {
+            onSubmit(){
+                //console.log(this.fileList)
+            },
+            beforeDelete(file){
+                for (let i=0;i<this.fileList.length;i++)
+                    if (this.fileList[i] === file) this.testPhoto.split(",").splice(i,1)
+                console.log(this.testPhoto)
+
+
+                //console.log(this.fileList)
+                //console.log(file)
+            },
+            afterRead(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                //console.log(file);
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    vm.testPhoto = vm.testPhoto+","+response.data.data
                     console.log(vm.testPhoto)
                     //vm.testPhoto.split(',').map(s=>{return 'http://127.0.0.1:8089' + s})
                 })
