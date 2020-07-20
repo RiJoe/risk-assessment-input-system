@@ -209,17 +209,17 @@
                         mainRisk: this.mainRisk,
                     }
                 }).then(function(response){
-                    if(response.result="SUCCESS"){
+                    if(response.data.result ==='SUCCESS'){
                         //vant.Toast.success('录入成功',window.location.href = "http://localhost:8080/theaccidentconsequences.html");
-                        window.location.href = "http://localhost:8080/theaccidentconsequences.html";
+                        window.location.href = "http://localhost:7000/theaccidentconsequences.html";
 
                     }
 
 
                 }).catch(function(response){
-                    if(response.result="FAILED"){
+                    if(response.data.result ==='FAILED'){
                         //vant.Toast.fail('录入失败，请重新录入',window.location.href="http://localhost:8080/enterpriseinformation.html");
-                        window.location.href="http://localhost:8080/enterpriseinformation.html";
+                        window.location.href="http://localhost:7000/enterpriseinformation.html";
                     }
 
                 })

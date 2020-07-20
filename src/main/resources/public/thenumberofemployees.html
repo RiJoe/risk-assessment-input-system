@@ -148,7 +148,7 @@
                 url: '/get/all/score',
                 mtthods: 'get',
             }).then(function (response) {
-                if (response.data.result=='SUCCESS'){
+                if (response.data.result==='SUCCESS'){
                     vm.scoredata = response.data.data
                 }
             })
@@ -157,7 +157,7 @@
         watch: {
             employeesradio: function(val){
                 this.scoredata.forEach((item) => {
-                    if (item.name == val) {
+                    if (item.name === val) {
                         vm.employeesscore = item.score;
 
                     }
@@ -172,7 +172,7 @@
             },
             onSubmit(values) {
                 // 判断是否有选项未选中
-                if(this.employeesradio == '' || this.employeeNumber == ''){
+                if(this.employeesradio === '' || this.employeeNumber === ''){
                     vant.Dialog.alert({
                         message: '请检查是否有选项未选或每班从业人数值未填写！选择后在提交!',
                     }).then(() => {
@@ -181,7 +181,7 @@
                     return false;
                 }
                 this.show = true
-                var employees ={"categoryId": "3","influenceFactorId":"10","determineFactor":this.employeesradio,"photo":'',"remark": this.employeeNumber}
+                var employees ={"categoryId": "3","influenceFactorId":"10","determineFactor":this.employeesradio,"photo":"","remark": this.employeeNumber}
                 // 风险等级评估
                 this.risklevel = this.quencesscore*this.prescore*this.employeesscore;
                 console.log(this.risklevel)
@@ -219,14 +219,15 @@
                     data: employees
                 }).then(function(response){
                     //vant.Toast.success('录入成功',window.location.href="http://localhost:8080/home.html");
-                    if (response.result="SUCCESS"){
-                        window.location.href="http://localhost:8080/home.html";
+                    console.log(response)
+                    if (response.data.result ==='SUCCESS'){
+                        window.location.href="http://localhost:7000/home.html";
                     }
 
                 }).catch(function(response){
-                    if(response.result="FAILED") {
+                    if(response.data.result ==='FAILED') {
                         //vant.Toast.fail('录入失败，请重新录入',window.location.href = "http://localhost:8080/thenumberofemployees.html");
-                        window.location.href = "http://localhost:8080/thenumberofemployees.html";
+                        window.location.href = "http://localhost:7000/thenumberofemployees.html";
                     }
                 })
                 });

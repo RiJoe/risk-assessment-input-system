@@ -53,7 +53,7 @@
                 <!--上传图片-->
                 <van-field name="standardizationuploader"  >
                     <template #input>
-                        <van-uploader  v-model="standardizationuploader" />
+                        <van-uploader :after-read="standardizationAfterRead" :before-delete="standardizationBeforeDelete" v-model="standardizationuploader" />
                     </template>
                 </van-field>
             </div>
@@ -76,7 +76,7 @@
                 <!--上传图片-->
                 <van-field name="hiddendangeruploader"  >
                     <template #input>
-                        <van-uploader  v-model="hiddendangeruploader"  />
+                        <van-uploader :after-read="hiddenDangerAfterRead" :before-delete="hiddenDangerBeforeDelete" v-model="hiddendangeruploader"  />
                     </template>
                 </van-field>
             </div>
@@ -99,7 +99,7 @@
                 <!--上传图片-->
                 <van-field name="trainuploader"  >
                     <template #input>
-                        <van-uploader  v-model="trainuploader"  />
+                        <van-uploader :after-read="trainAfterRead" :before-delete="trainBeforeDelete" v-model="trainuploader"  />
                     </template>
                 </van-field>
             </div>
@@ -137,12 +137,15 @@
         data: {
             standardizationradio: '',
             standardizationuploader: [],
+            standardizationAfterReadList: [],
 
             hiddendangerradio: '',
             hiddendangeruploader: [],
+            hiddenDangerAfterReadList: [],
 
             trainradio: '',
             trainuploader: [],
+            trainAfterReadList: [],
 
             scoredata: '',
             show: false,
@@ -222,10 +225,87 @@
             }
         },
         methods: {
+            // 返回图片地址
+            standardizationAfterRead(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm.standardizationAfterReadList.push(response.data.data)
+                    }
+                })
+            },
+            hiddenDangerAfterRead(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm.hiddenDangerAfterReadList.push(response.data.data)
+                    }
+                })
+            },
+            trainAfterRead(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm.trainAfterReadList.push(response.data.data)
+                    }
+                })
+            },
 
+
+            // 删除图片
+            standardizationBeforeDelete(file){
+                this.standardizationuploader.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.standardizationAfterReadList.splice(index,1)
+                    }
+                })
+                return true
+            },
+            // 删除图片
+            hiddenDangerBeforeDelete(file){
+                this.hiddendangeruploader.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.hiddenDangerAfterReadList.splice(index,1)
+                    }
+                })
+                return true
+            },
+            // 删除图片
+            trainBeforeDelete(file){
+                this.trainuploader.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.trainAfterReadList.splice(index,1)
+                    }
+                })
+                return true
+            },
             onSubmit(values){
                 // 判断是否有选项未选中
-                if (this.standardizationradio==''||this.hiddendangerradio==''||this.trainradio==''){
+                if (this.standardizationradio===''||this.hiddendangerradio===''||this.trainradio===''){
                     vant.Dialog.alert({
                         message: '请检查是否有选项未选！选择后在提交!',
                     }).then(() => {
@@ -236,7 +316,7 @@
                 this.show=true
 
 
-                // 7.生产安全标准化
+               /* // 7.生产安全标准化
                 if (this.standardizationuploader.length > 0) {
                     var standardizationlist = '';
                     for (var i = 0; i < this.standardizationuploader.length; i++) {
@@ -261,27 +341,27 @@
                         var trainphoto = this.trainuploader[i].content;
                         trainphotolist=trainphotolist+"#"+trainphoto;
                     }
-                }
+                }*/
 
                 var list = [
                     {
                         "categoryId": "2",
                         "influenceFactorId": "7",
                         "determineFactor": this.standardizationradio,
-                        "photo": standardizationlist
+                        "photo": this.standardizationAfterReadList.join(',')
                     },
 
                     {
                         "categoryId": "2",
                         "influenceFactorId": "8",
                         "determineFactor": this.hiddendangerradio,
-                        "photo": hiddendangerphotolist
+                        "photo": this.hiddenDangerAfterReadList.join(',')
                     },
                     {
                         "categoryId": "2",
                         "influenceFactorId": "9",
                         "determineFactor": this.trainradio,
-                        "photo": trainphotolist
+                        "photo": this.trainAfterReadList.join(',')
                     }
                 ];
                 //alert("事故可能性总分为："+this.standardizationscore + this.hiddendangerscore + this.trainscore)
@@ -296,16 +376,16 @@
                     method: 'post',
                     data: list
                 }).then(function (response) {
-                    if (response.result = "SUCCESS") {
+                    if (response.data.result === 'SUCCESS') {
                         //vant.Toast.success('录入成功',window.location.href = "http://localhost:8080/thenumberofemployees.html");
                         var score = vm.standardizationscore+vm.hiddendangerscore+vm.trainscore;
                         var prescore = vm.prescore
-                        window.location.href = "http://localhost:8080/thenumberofemployees.html?score="+ score+"&quencesscore="+prescore;
+                        window.location.href = "http://localhost:7000/thenumberofemployees.html?score="+ score+"&quencesscore="+prescore;
                     }
                 }).catch(function (response) {
-                    if (response.result = "FAILED") {
+                    if (response.data.result === 'FAILED') {
                         //vant.Toast.fail('录入失败，请重新录入',window.location.href = "http://localhost:8080/possibilityofaccident.html");
-                        window.location.href = "http://localhost:8080/possibilityofaccident.html";
+                        window.location.href = "http://localhost:7000/possibilityofaccident.html";
                     }
                 })
                 });

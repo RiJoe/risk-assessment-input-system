@@ -56,7 +56,7 @@
                 <!--上传图片-->
                 <van-field name="hazardsuploader"  >
                     <template #input>
-                        <van-uploader :after-read="afterRead" v-model="hazardsuploader" />
+                        <van-uploader :after-read="hazardsAfterRead" :before-delete="hazardsBeforeDelete" v-model="hazardsuploader" />
                     </template>
                 </van-field>
             </div>
@@ -72,7 +72,7 @@
                         <div>
                             <van-field name="specialequipmentuploader1"  >
                                 <template #input>
-                                    <van-uploader  v-model="specialequipmentuploader1"  preview-size="20px"/>
+                                    <van-uploader :after-read="specialEquipmentAfterRead1" :before-delete="specialEquipmentBeforeDelete1" v-model="specialequipmentuploader1"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -82,7 +82,7 @@
                         <div>
                             <van-field name="specialequipmentuploader2"  >
                                 <template #input>
-                                    <van-uploader  v-model="specialequipmentuploader2"  preview-size="20px"/>
+                                    <van-uploader :after-read="specialEquipmentAfterRead2" :before-delete="specialEquipmentBeforeDelete2" v-model="specialequipmentuploader2"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -92,7 +92,7 @@
                         <div>
                             <van-field name="specialequipmentuploader3"  >
                                 <template #input>
-                                    <van-uploader  v-model="specialequipmentuploader3"  preview-size="20px"/>
+                                    <van-uploader :after-read="specialEquipmentAfterRead3" :before-delete="specialEquipmentBeforeDelete3" v-model="specialequipmentuploader3"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -122,7 +122,7 @@
                         <div>
                             <van-field name="hazardouslequipmentuploader1"  >
                                 <template #input>
-                                    <van-uploader  v-model="hazardouslequipmentuploader1"  preview-size="20px"/>
+                                    <van-uploader :after-read="hazardousEquipmentAfterRead1" :before-delete="hazardousEquipmentBeforeDelete1" v-model="hazardouslequipmentuploader1"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -132,7 +132,7 @@
                         <div>
                             <van-field name="hazardouslequipmentuploader2"  >
                                 <template #input>
-                                    <van-uploader  v-model="hazardouslequipmentuploader2"  preview-size="20px"/>
+                                    <van-uploader :after-read="hazardousEquipmentAfterRead2" :before-delete="hazardousEquipmentBeforeDelete2" v-model="hazardouslequipmentuploader2"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -140,9 +140,9 @@
                     <van-row type="flex" justify="space-between">
                         <van-checkbox name="冲剪压机械" shape="square">冲剪压机械</van-checkbox>
                         <div>
-                            <van-field name="punchinguploader5"  >
+                            <van-field name="hazardouslequipmentuploader3"  >
                                 <template #input>
-                                    <van-uploader  v-model="punchinguploader5"  preview-size="20px"/>
+                                    <van-uploader :after-read="hazardousEquipmentAfterRead3" :before-delete="hazardousEquipmentBeforeDelete3" v-model="hazardouslequipmentuploader3"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -150,9 +150,9 @@
                     <van-row type="flex" justify="space-between">
                         <van-checkbox name="烤箱" shape="square">烤箱</van-checkbox>
                         <div>
-                            <van-field name="hazardouslequipmentuploader3"  >
+                            <van-field name="hazardouslequipmentuploader4"  >
                                 <template #input>
-                                    <van-uploader  v-model="hazardouslequipmentuploader3"  preview-size="20px"/>
+                                    <van-uploader :after-read="hazardousEquipmentAfterRead4" :before-delete="hazardousEquipmentBeforeDelete4" v-model="hazardouslequipmentuploader4"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -160,9 +160,9 @@
                     <van-row type="flex" justify="space-between">
                         <van-checkbox name="无" shape="square">无</van-checkbox>
                         <div>
-                            <van-field name="hazardouslequipmentuploader4"  >
+                            <van-field name="punchinguploader5"  >
                                 <template #input>
-                                    <van-uploader  v-model="hazardouslequipmentuploader4"  preview-size="20px" disabled/>
+                                    <van-uploader  v-model="punchinguploader5"  preview-size="20px" disabled/>
                                 </template>
                             </van-field>
                         </div>
@@ -187,7 +187,7 @@
             <!--上传图片-->
             <van-field name="hazardouschemicalsuploader"  >
                 <template #input>
-                    <van-uploader  v-model="hazardouschemicalsuploader"  />
+                    <van-uploader :after-read="hazardousChemicalsAfterRead" :before-delete="hazardousChemicalsBeforeDelete" v-model="hazardouschemicalsuploader"  />
                 </template>
             </van-field>
         </div>
@@ -213,7 +213,7 @@
                         <div>
                             <van-field name="dangerousuploader1"  >
                                 <template #input>
-                                    <van-uploader  v-model="dangerousuploader1"  preview-size="20px"/>
+                                    <van-uploader :after-read="dangerousAfterRead1" :before-delete="dangerousBeforeDelete1" v-model="dangerousuploader1"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -223,7 +223,7 @@
                         <div>
                             <van-field name="dangerousuploader2"  >
                                 <template #input>
-                                    <van-uploader  v-model="dangerousuploader2"  preview-size="20px"/>
+                                    <van-uploader :after-read="dangerousAfterRead2" :before-delete="dangerousBeforeDelete2" v-model="dangerousuploader2"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -233,7 +233,7 @@
                         <div>
                             <van-field name="dangerousuploader3"  >
                                 <template #input>
-                                    <van-uploader  v-model="dangerousuploader3"  preview-size="20px"/>
+                                    <van-uploader :after-read="dangerousAfterRead3" :before-delete="dangerousBeforeDelete3" v-model="dangerousuploader3"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -243,7 +243,7 @@
                         <div>
                             <van-field name="dangerousuploader4"  >
                                 <template #input>
-                                    <van-uploader  v-model="dangerousuploader4"  preview-size="20px"/>
+                                    <van-uploader :after-read="dangerousAfterRead4" :before-delete="dangerousBeforeDelete4" v-model="dangerousuploader4"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -253,7 +253,7 @@
                         <div>
                             <van-field name="dangerousuploader5"  >
                                 <template #input>
-                                    <van-uploader  v-model="dangerousuploader5"  preview-size="20px"/>
+                                    <van-uploader :after-read="dangerousAfterRead5" :before-delete="dangerousBeforeDelete5" v-model="dangerousuploader5"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -263,7 +263,7 @@
                         <div>
                             <van-field name="dangerousuploader6"  >
                                 <template #input>
-                                    <van-uploader  v-model="dangerousuploader6"  preview-size="20px"/>
+                                    <van-uploader :after-read="dangerousAfterRead6" :before-delete="dangerousBeforeDelete6" v-model="dangerousuploader6"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -273,7 +273,7 @@
                         <div>
                             <van-field name="dangerousuploader7"  >
                                 <template #input>
-                                    <van-uploader  v-model="dangerousuploader7"  preview-size="20px"/>
+                                    <van-uploader :after-read="dangerousAfterRead7" :before-delete="dangerousBeforeDelete7" v-model="dangerousuploader7"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -283,7 +283,7 @@
                         <div>
                             <van-field name="dangerousuploader8"  >
                                 <template #input>
-                                    <van-uploader  v-model="dangerousuploader8"  preview-size="20px"/>
+                                    <van-uploader :after-read="dangerousAfterRead8" :before-delete="dangerousBeforeDelete8" v-model="dangerousuploader8"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -293,7 +293,7 @@
                         <div>
                             <van-field name="dangerousuploader9"  >
                                 <template #input>
-                                    <van-uploader  v-model="dangerousuploader9"  preview-size="20px"/>
+                                    <van-uploader :after-read="dangerousAfterRead9" :before-delete="dangerousBeforeDelete9" v-model="dangerousuploader9"  preview-size="20px"/>
                                 </template>
                             </van-field>
                         </div>
@@ -330,7 +330,7 @@
                 <!--上传图片-->
                 <van-field name="emergencyresponseuploader"  >
                     <template #input>
-                        <van-uploader  v-model="emergencyresponseuploader"  />
+                        <van-uploader :after-read="emergencyResponseAfterRead" :before-delete="emergencyResponseBeforeDelete" v-model="emergencyresponseuploader"  />
                     </template>
                 </van-field>
             </div>
@@ -367,10 +367,20 @@
             show: false,
             // 重大危险源
             hazardsuploader: [],
-            afterReadList: '',
+            hazardsAfterReadList: [],
             radio: '',
 
             // 危险工艺
+            dangerousAfterReadList1: [],
+            dangerousAfterReadList2: [],
+            dangerousAfterReadList3: [],
+            dangerousAfterReadList4: [],
+            dangerousAfterReadList5: [],
+            dangerousAfterReadList6: [],
+            dangerousAfterReadList7: [],
+            dangerousAfterReadList8: [],
+            dangerousAfterReadList9: [],
+            dangerousAfterReadList10: [],
             dangerousuploader1: [],
             dangerousuploader2: [],
             dangerousuploader3: [],
@@ -389,6 +399,10 @@
             specialequipmentuploader2: [],
             specialequipmentuploader3: [],
             specialequipmentuploader4: [],
+            specialEquipmentAfterReadList1: [],
+            specialEquipmentAfterReadList2: [],
+            specialEquipmentAfterReadList3: [],
+            specialEquipmentAfterReadList4: [],
 
             // 危险设施设备
             hazardouslequipmentcheckboxGroup: [],
@@ -397,14 +411,20 @@
             hazardouslequipmentuploader3: [],
             hazardouslequipmentuploader4: [],
             punchinguploader5: [],
+            hazardousEquipmentAfterReadList1: [],
+            hazardousEquipmentAfterReadList2: [],
+            hazardousEquipmentAfterReadList3: [],
+            hazardousEquipmentAfterReadList4: [],
 
             // 危险化学品
             hazardouschemicalsradio: '',
             hazardouschemicalsuploader: [],
+            hazardousChemicalsAfterReadList: [],
 
             // 应急反应
             emergencyresponseradio: '',
             emergencyresponseuploader: [],
+            emergencyResponseAfterReadList: [],
 
             remark: '',
             // 选项分值
@@ -424,7 +444,7 @@
                 url: '/get/all/score',
                 method: 'get',
             }).then(function (response) {
-                if (response.data.result=='SUCCESS'){
+                if (response.data.result==='SUCCESS'){
                     vm.scoredata = response.data.data
                 }
             })
@@ -433,7 +453,7 @@
             // 重大危险源选中分值
             radio: function (val) {
                 this.scoredata.forEach((item) => {
-                    if (item.name == val) {
+                    if (item.name === val) {
                         vm.hazardsscore = item.score;
 
                     }
@@ -446,13 +466,13 @@
                     var totalscore = null;
                     this.scoredata.forEach((item) => {
                         for (var i = 0; i < val.length; i++) {
-                            if (item.name == val[i]) {
+                            if (item.name === val[i]) {
                                 totalscore = totalscore + item.score
                                 vm.specialequipmentscore = totalscore
                             }
                         }
                     })
-                    if (val == ''){
+                    if (val === ''){
                         vm.specialequipmentscore =0
                     }
                 }
@@ -463,13 +483,13 @@
                     var totalscore = null;
                     this.scoredata.forEach((item) => {
                         for (var i = 0; i < val.length; i++) {
-                            if (item.name == val[i]) {
+                            if (item.name === val[i]) {
                                 totalscore = totalscore + item.score
                                 vm.hazardouslequipmentscore = totalscore
                             }
                         }
                     })
-                    if (val == ''){
+                    if (val === ''){
                         vm.hazardouslequipmentscore =0
                     }
                 }
@@ -477,7 +497,7 @@
             // 危险化学品
             hazardouschemicalsradio: function (val) {
                 this.scoredata.forEach((item) => {
-                    if (item.name == val) {
+                    if (item.name === val) {
                         vm.hazardouschemicalsscore = item.score;
 
                     }
@@ -490,7 +510,7 @@
                     this.scoredata.forEach((item) => {
 
                         for (var i = 0; i < val.length; i++) {
-                            if (item.name == val[i]) {
+                            if (item.name === val[i]) {
                                 totalscore = totalscore + item.score
                                 vm.dangerousscore = totalscore
                             }
@@ -505,7 +525,7 @@
             // 应急反应选中总分
             emergencyresponseradio: function (val) {
                 this.scoredata.forEach((item) => {
-                    if (item.name == val) {
+                    if (item.name === val) {
                         vm.emergencyresponsescore = item.score;
 
                     }
@@ -513,10 +533,10 @@
             },
         },
         methods: {
-            afterRead(file) {
+            // 返回图片地址
+            hazardsAfterRead(file) {
                 let vm = this
                 // 此时可以自行将文件上传至服务器
-                console.log(file);
                 const fd = new FormData()
                 fd.append('file',file.file)
                 axios({
@@ -524,22 +544,466 @@
                     method: 'post',
                     data: fd
                 }).then(function (response){
-                    console.log(response.data.data)
-                    vm.afterReadList = vm.afterReadList.concat(response.data.data+",")
-                    console.log(vm.afterReadList)
+                    if(response.status ===200){
+                        vm.hazardsAfterReadList.push(response.data.data)
+                    }
                 })
-
             },
+            specialEquipmentAfterRead1(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm.specialEquipmentAfterReadList1.push(response.data.data)
+                    }
+                })
+            },
+            specialEquipmentAfterRead2(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm.specialEquipmentAfterReadList2.push(response.data.data)
+                    }
+                })
+            },
+            specialEquipmentAfterRead3(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm.specialEquipmentAfterReadList3.push(response.data.data)
+                    }
+                })
+            },
+            hazardousEquipmentAfterRead1(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. hazardousEquipmentAfterReadList1.push(response.data.data)
+                    }
+                })
+            },
+            hazardousEquipmentAfterRead2(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. hazardousEquipmentAfterReadList2.push(response.data.data)
+                    }
+                })
+            },
+            hazardousEquipmentAfterRead3(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. hazardousEquipmentAfterReadList3.push(response.data.data)
+                    }
+                })
+            },
+            hazardousEquipmentAfterRead4(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. hazardousEquipmentAfterReadList4.push(response.data.data)
+                    }
+                })
+            },
+            hazardousChemicalsAfterRead(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. hazardousChemicalsAfterReadList.push(response.data.data)
+                    }
+                })
+            },
+            dangerousAfterRead1(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. dangerousAfterReadList1.push(response.data.data)
+                    }
+                })
+            },
+            dangerousAfterRead2(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. dangerousAfterReadList2.push(response.data.data)
+                    }
+                })
+            },
+            dangerousAfterRead3(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. dangerousAfterReadList3.push(response.data.data)
+                    }
+                })
+            },
+            dangerousAfterRead4(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. dangerousAfterReadList4.push(response.data.data)
+                    }
+                })
+            },
+            dangerousAfterRead5(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. dangerousAfterReadList5.push(response.data.data)
+                    }
+                })
+            },
+            dangerousAfterRead6(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. dangerousAfterReadList6.push(response.data.data)
+                    }
+                })
+            },
+            dangerousAfterRead7(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. dangerousAfterReadList7.push(response.data.data)
+                    }
+                })
+            },
+            dangerousAfterRead8(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. dangerousAfterReadList8.push(response.data.data)
+                    }
+                })
+            },
+            dangerousAfterRead9(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. dangerousAfterReadList9.push(response.data.data)
+                    }
+                })
+            },
+            emergencyResponseAfterRead(file) {
+                let vm = this
+                // 此时可以自行将文件上传至服务器
+                const fd = new FormData()
+                fd.append('file',file.file)
+                axios({
+                    url: '/get/file/path',
+                    method: 'post',
+                    data: fd
+                }).then(function (response){
+                    if(response.status ===200){
+                        vm. emergencyResponseAfterReadList.push(response.data.data)
+                    }
+                })
+            },
+
+            // 删除图片
+            hazardsBeforeDelete(file){
+                this.hazardsuploader.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.hazardsAfterReadList.splice(index,1)
+                    }
+                })
+                return true
+            },
+            specialEquipmentBeforeDelete1(file){
+                this.specialequipmentuploader1.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.specialEquipmentAfterReadList1.splice(index,1)
+                    }
+                })
+                return true
+            },
+            specialEquipmentBeforeDelete2(file){
+                this.specialequipmentuploader2.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.specialEquipmentAfterReadList2.splice(index,1)
+                    }
+                })
+                return true
+            },
+            specialEquipmentBeforeDelete3(file){
+                this.specialequipmentuploader3.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.specialEquipmentAfterReadList3.splice(index,1)
+                    }
+                })
+                return true
+            },
+
+            hazardousEquipmentBeforeDelete1(file){
+                this.hazardouslequipmentuploader1.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.hazardousEquipmentAfterReadList1.splice(index,1)
+                    }
+                })
+                return true
+            },
+            hazardousEquipmentBeforeDelete2(file){
+                this.hazardouslequipmentuploader2.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.hazardousEquipmentAfterReadList2.splice(index,1)
+                    }
+                })
+                return true
+            },
+            hazardousEquipmentBeforeDelete3(file){
+                this.hazardouslequipmentuploader3.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.hazardousEquipmentAfterReadList3.splice(index,1)
+                    }
+                })
+                return true
+            },
+            hazardousEquipmentBeforeDelete4(file){
+                this.hazardouslequipmentuploader4.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.hazardousEquipmentAfterReadList4.splice(index,1)
+                    }
+                })
+                return true
+            },
+            hazardousChemicalsBeforeDelete(file){
+                this.hazardouschemicalsuploader.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.hazardousChemicalsAfterReadList.splice(index,1)
+                    }
+                })
+                return true
+            },
+            dangerousBeforeDelete1(file){
+                this.dangerousuploader1.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.dangerousAfterReadList1.splice(index,1)
+                    }
+                })
+                return true
+            },
+            dangerousBeforeDelete2(file){
+                this.dangerousuploader2.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.dangerousAfterReadList2.splice(index,1)
+                    }
+                })
+                return true
+            },
+            dangerousBeforeDelete3(file){
+                this.dangerousuploader3.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.dangerousAfterReadList3.splice(index,1)
+                    }
+                })
+                return true
+            },
+            dangerousBeforeDelete4(file){
+                this.dangerousuploader4.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.dangerousAfterReadList4.splice(index,1)
+                    }
+                })
+                return true
+            },
+            dangerousBeforeDelete5(file){
+                this.dangerousuploader5.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.dangerousAfterReadList5.splice(index,1)
+                    }
+                })
+                return true
+            },
+            dangerousBeforeDelete6(file){
+                this.dangerousuploader6.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.dangerousAfterReadList6.splice(index,1)
+                    }
+                })
+                return true
+            },
+            dangerousBeforeDelete7(file){
+                this.dangerousuploader7.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.dangerousAfterReadList7.splice(index,1)
+                    }
+                })
+                return true
+            },
+            dangerousBeforeDelete8(file){
+                this.dangerousuploader8.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.dangerousAfterReadList8.splice(index,1)
+                    }
+                })
+                return true
+            },
+            dangerousBeforeDelete9(file){
+                this.dangerousuploader9.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.dangerousAfterReadList9.splice(index,1)
+                    }
+                })
+                return true
+            },
+            emergencyResponseBeforeDelete(file){
+                this.emergencyresponseuploader.forEach((item,index)=>{
+                    // 通过要删除图片下表进行删除图片地址
+                    if(item === file){
+                        this.emergencyResponseAfterReadList.splice(index,1)
+                    }
+                })
+                return true
+            },
+
+
             onSubmit(values) {
                 // 判断是否有选项未选中
                 if(
-
-                    this.radio== ''||
-                    this.specialequipmentcheckboxGroup.length == ''||
-                    this.hazardouslequipmentcheckboxGroup.length==''||
-                    this.emergencyresponseradio==''||
-                    this.checkboxGroup.length==''||
-                    this.emergencyresponseradio==''
+                    this.radio=== ''||
+                    this.specialequipmentcheckboxGroup.length === null||
+                    this.hazardouslequipmentcheckboxGroup.length=== null||
+                    this.emergencyresponseradio===''||
+                    this.checkboxGroup.length=== null||
+                    this.emergencyresponseradio=== ''
 
                 ){
                     vant.Dialog.alert({
@@ -548,15 +1012,13 @@
                         // on close
                     });
                     return false;
-
                 }
 
-                this.show = true
+                this.show = true;
 
                 // 把每一项的值以对象的形式存进数组作为data传给后端
                 var accidentconsequencecollection = [];
                 // 1.重大危险源
-
                 /*var hazardphotolist = '';
                 if(this.hazardsuploader.length>0){
                     for(var i=0; i<this.hazardsuploader.length;i++){
@@ -564,21 +1026,8 @@
                         hazardphotolist = hazardphoto + ',' + hazardphotolist;
                     }
                 }*/
-                /*if(this.hazardsuploader.length>0){
-                    let fd = new FormData()
-
-                    for(let i=0;i<this.hazardsuploader.length;i++){
-                        fd = this.hazardsuploader[i].file
-                    }
-
-                    axios({
-                        url: '/get/file/path',
-                        method: 'post',
-                        data: fd
-                    })
-                }*/
-                if(this.radio !=''){
-                    var hazard = {"categoryId": "1","influenceFactorId":"1","determineFactor":this.radio,"photo":this.hazardsuploader}
+                if(this.radio !==''){
+                    var hazard = {"categoryId": "1","influenceFactorId":"1","determineFactor":this.radio,"photo":this.hazardsAfterReadList.join(',')}
                     accidentconsequencecollection.push(hazard)
                 }
 
@@ -586,52 +1035,52 @@
                 // 2.特种设备
 
                 this.specialequipmentcheckboxGroup.forEach((item,index) =>{
-                    if(item == "锅炉"){
-                        var specialequipmentphoto1list = '';
+                    if(item === "锅炉"){
+                        /*var specialequipmentphoto1list = '';
                         if(this.specialequipmentuploader1.length>0){
 
                             for(var i=0; i<this.specialequipmentuploader1.length;i++){
                                 var specialequipmentphoto1 = this.specialequipmentuploader1[i].content;
                                 specialequipmentphoto1list=specialequipmentphoto1list+"#"+specialequipmentphoto1;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":specialequipmentphoto1list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":this.specialEquipmentAfterReadList1.join(',')})
                         return false;
                     }
-                    if (item == "压力容器"){
-                        var specialequipmentphoto2list = '';
+                    if (item === "压力容器"){
+                        /*var specialequipmentphoto2list = '';
                         if(this.specialequipmentuploader2.length>0){
 
                             for(var i=0; i<this.specialequipmentuploader2.length;i++){
                                 var specialequipmentphoto2 = this.specialequipmentuploader2[i].content;
                                 specialequipmentphoto2list=specialequipmentphoto2list+"#"+specialequipmentphoto2;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":specialequipmentphoto2list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":this.specialEquipmentAfterReadList2.join(',')})
                         return false;
                     }
-                    if(item == "其他"){
-                        var specialequipmentphoto3list = '';
+                    if(item === "其他"){
+                        /*var specialequipmentphoto3list = '';
                         if(this.specialequipmentuploader3.length>0){
 
                             for(var i=0; i<this.specialequipmentuploader3.length;i++){
                                 var specialequipmentphoto3 = this.specialequipmentuploader3[i].content;
                                 specialequipmentphoto3list=specialequipmentphoto3list+"#"+specialequipmentphoto3;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":specialequipmentphoto3list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":this.specialEquipmentAfterReadList3.join(',')})
                         return false;
                     }
-                    if(item == "无"){
-                        var specialequipmentphoto4list = '';
+                    if(item === "无"){
+                        /*var specialequipmentphoto4list = '';
                         if(this.specialequipmentuploader4.length>0){
 
                             for(var i=0; i<this.specialequipmentuploader4.length;i++){
                                 var specialequipmentphoto4 = this.specialequipmentuploader2[i].content;
                                 specialequipmentphoto4list=specialequipmentphoto4list+"#"+specialequipmentphoto4;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":specialequipmentphoto4list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"2","determineFactor":item,"photo":""})
                         return false;
                     }
 
@@ -642,70 +1091,70 @@
                 // 3.危险设施设备
 
                 this.hazardouslequipmentcheckboxGroup.forEach((item,index)=>{
-                    if(item == "洁净车间"){
-                        var hazardouslequipmentphoto1list = '';
+                    if(item === "洁净车间"){
+                        /*var hazardouslequipmentphoto1list = '';
                         if(this.hazardouslequipmentuploader1.length>0){
 
                             for(var i=0; i<this.hazardouslequipmentuploader1.length;i++){
                                 var hazardouslequipmentphoto1 = this.hazardouslequipmentuploader1[i].content;
                                 hazardouslequipmentphoto1list=hazardouslequipmentphoto1list+"#"+hazardouslequipmentphoto1;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":hazardouslequipmentphoto1list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":this.hazardousEquipmentAfterReadList1.join(',')})
                         return false;
                     }
-                    if(item == "砂光机"){
-                        var hazardouslequipmentphoto2list = '';
+                    if(item === "砂光机"){
+                        /*var hazardouslequipmentphoto2list = '';
                         if(this.hazardouslequipmentuploader2.length>0){
 
                             for(var i=0; i<this.hazardouslequipmentuploader2.length;i++){
                                 var hazardouslequipmentphoto2 = this.hazardouslequipmentuploader2[i].content;
                                 hazardouslequipmentphoto2list=hazardouslequipmentphoto2list+"#"+hazardouslequipmentphoto2;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":hazardouslequipmentphoto2list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":this.hazardousEquipmentAfterReadList2.join(',')})
                         return false;
                     }
-                    if(item == "冲剪压机械"){
-                        var punchingphotolist = '';
+                    if(item === "冲剪压机械"){
+                        /*var punchingphotolist = '';
                         if(this.punchinguploader5.length>0){
 
                             for(var i=0; i<this.punchinguploader5.length;i++){
                                 var punchingphoto = this.punchinguploader5[i].content;
                                 punchingphotolist=punchingphotolist+"#"+punchingphoto;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":punchingphotolist})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":this.hazardousEquipmentAfterReadList3.join(',')})
                         return false;
                     }
-                    if(item == "烤箱"){
-                        var hazardouslequipmentphoto3list = '';
+                    if(item === "烤箱"){
+                        /*var hazardouslequipmentphoto3list = '';
                         if(this.hazardouslequipmentuploader3.length>0){
 
                             for(var i=0; i<this.hazardouslequipmentuploader3.length;i++){
                                 var hazardouslequipmentphoto3 = this.hazardouslequipmentuploader3[i].content;
                                 hazardouslequipmentphoto3list=hazardouslequipmentphoto3list+"#"+hazardouslequipmentphoto3;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":hazardouslequipmentphoto3list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":this.hazardousEquipmentAfterReadList4.join(',')})
                         return false;
                     }
-                    if(item == "无"){
-                        var hazardouslequipmentphoto4list = '';
+                    if(item === "无"){
+                        /*var hazardouslequipmentphoto4list = '';
                         if(this.hazardouslequipmentuploader4.length>0){
 
                             for(var i=0; i<this.hazardouslequipmentuploader4.length;i++){
                                 var hazardouslequipmentphoto4 = this.hazardouslequipmentuploader4[i].content;
                                 hazardouslequipmentphoto4list=hazardouslequipmentphoto4list+"#"+hazardouslequipmentphoto4;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":hazardouslequipmentphoto4list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"3","determineFactor":item,"photo":""})
                         return false;
                     }
                 })
 
                 // 4.危险化学品
-                var hazardouschemicalsphotolist = '';
+                /*var hazardouschemicalsphotolist = '';
                 if(this.hazardouschemicalsuploader.length>0){
 
                     for(var i=0; i<this.hazardouschemicalsuploader.length;i++){
@@ -713,9 +1162,9 @@
                         hazardouschemicalsphotolist = hazardouschemicalsphotolist+"#"+hazardouschemicalsphoto;
                     }
 
-                }
-                if(this.hazardouschemicalsradio !=''){
-                    var hazardouschemicals = {"categoryId": "1","influenceFactorId":"4","determineFactor":this.hazardouschemicalsradio,"photo":hazardouschemicalsphotolist,"remark":this.remark}
+                }*/
+                if(this.hazardouschemicalsradio !==''){
+                    var hazardouschemicals = {"categoryId": "1","influenceFactorId":"4","determineFactor":this.hazardouschemicalsradio,"photo":this.hazardousChemicalsAfterReadList.join(','),"remark":this.remark}
                     accidentconsequencecollection.push(hazardouschemicals)
                 }
 
@@ -724,123 +1173,123 @@
 
                 // 5.危险工艺
                 this.checkboxGroup.forEach((item,index)=>{
-                    if(item == "铝镁粉尘"){
-                        var dangerousphoto1list = '';
+                    if(item === "铝镁粉尘"){
+                        /*var dangerousphoto1list = '';
                         if(this.dangerousuploader1.length>0){
 
                             for(var i=0; i<this.dangerousuploader1.length;i++){
                                 var dangerousphoto1 = this.dangerousuploader1[i].content;
                                 dangerousphoto1list=dangerousphoto1list+"#"+dangerousphoto1;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto1list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":this.dangerousAfterReadList1.join(',')})
                         return false;
                     }
-                    if(item == "木粉尘"){
-                        var dangerousphoto2list = '';
+                    if(item === "木粉尘"){
+                        /*var dangerousphoto2list = '';
                         if(this.dangerousuploader2.length>0){
 
                             for(var i=0; i<this.dangerousuploader2.length;i++){
                                 var dangerousphoto2 = this.dangerousuploader2[i].content;
                                 dangerousphoto2list=dangerousphoto2list+"#"+dangerousphoto2;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto2list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":this.dangerousAfterReadList2.join(',')})
                         return false;
                     }
-                    if(item == "涉氨"){
-                        var dangerousphoto3list = '';
+                    if(item === "涉氨"){
+                        /*var dangerousphoto3list = '';
                         if(this.dangerousuploader3.length>0){
 
                             for(var i=0; i<this.dangerousuploader3.length;i++){
                                 var dangerousphoto3 = this.dangerousuploader3[i].content;
                                 dangerousphoto3list=dangerousphoto3list+"#"+dangerousphoto3;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto3list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":this.dangerousAfterReadList3.join(',')})
                         return false;
                     }
-                    if(item == "有限空间"){
-                        var dangerousphoto4list = '';
+                    if(item === "有限空间"){
+                        /*var dangerousphoto4list = '';
                         if(this.dangerousuploader4.length>0){
 
                             for(var i=0; i<this.dangerousuploader4.length;i++){
                                 var dangerousphoto4 = this.dangerousuploader4[i].content;
                                 dangerousphoto4list=dangerousphoto4list+"#"+dangerousphoto4;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto4list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":this.dangerousAfterReadList4.join(',')})
                         return false;
                     }
-                    if(item == "喷漆喷油"){
-                        var dangerousphoto5list = '';
+                    if(item === "喷漆喷油"){
+                        /*var dangerousphoto5list = '';
                         if(this.dangerousuploader5.length>0){
 
                             for(var i=0; i<this.dangerousuploader5.length;i++){
                                 var dangerousphoto5 = this.dangerousuploader5[i].content;
                                 dangerousphoto5list=dangerousphoto5list+"#"+dangerousphoto5;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto5list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":this.dangerousAfterReadList5.join(',')})
                         return false;
                     }
-                    if(item == "涂层烘干"){
-                        var dangerousphoto6list = '';
+                    if(item === "涂层烘干"){
+                       /* var dangerousphoto6list = '';
                         if(this.dangerousuploader6.length>0){
 
                             for(var i=0; i<this.dangerousuploader6.length;i++){
                                 var dangerousphoto6 = this.dangerousuploader6[i].content;
                                 dangerousphoto6list=dangerousphoto6list+"#"+dangerousphoto6;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto6list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":this.dangerousAfterReadList6.join(',')})
                         return false;
                     }
-                    if(item == "锂离子电池"){
-                        var dangerousphoto7list = '';
+                    if(item === "锂离子电池"){
+                        /*var dangerousphoto7list = '';
                         if(this.dangerousuploader7.length>0){
 
                             for(var i=0; i<this.dangerousuploader7.length;i++){
                                 var dangerousphoto7 = this.dangerousuploader7[i].content;
                                 dangerousphoto7list=dangerousphoto7list+"#"+dangerousphoto7;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto7list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":this.dangerousAfterReadList7.join(',')})
                         return false;
-                    }if(item == "高温熔融"){
-                        var dangerousphoto8list = '';
+                    }if(item === "高温熔融"){
+                        /*var dangerousphoto8list = '';
                         if(this.dangerousuploader8.length>0){
 
                             for(var i=0; i<this.dangerousuploader8.length;i++){
                                 var dangerousphoto8 = this.dangerousuploader8[i].content;
                                 dangerousphoto8list=dangerousphoto8list+"#"+dangerousphoto8;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto8list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":this.dangerousAfterReadList8.join(',')})
                         return false;
                     }
-                    if(item == "使用排风管道"){
-                        var dangerousphoto9list = '';
+                    if(item === "使用排风管道"){
+                        /*var dangerousphoto9list = '';
                         if(this.dangerousuploader9.length>0){
 
                             for(var i=0; i<this.dangerousuploader9.length;i++){
                                 var dangerousphoto9 = this.dangerousuploader9[i].content;
                                 dangerousphoto9list=dangerousphoto9list+"#"+dangerousphoto9;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto9list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":this.dangerousAfterReadList9.join(',')})
                         return false;
                     }
-                    if(item == "无"){
-                        var dangerousphoto10list = '';
+                    if(item === "无"){
+                        /*var dangerousphoto10list = '';
                         if(this.dangerousuploader10.length>0){
 
                             for(var i=0; i<this.dangerousuploader10.length;i++){
                                 var dangerousphoto10 = this.dangerousuploader10[i].content;
                                 dangerousphoto10list=dangerousphoto10list+"#"+dangerousphoto10;
                             }
-                        }
-                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":dangerousphoto10list})
+                        }*/
+                        accidentconsequencecollection.push({"categoryId": "1","influenceFactorId":"5","determineFactor":item,"photo":""})
                         return false;
                     }
 
@@ -848,16 +1297,16 @@
                 })
 
                 // 6.应急反应
-                var emergencyresponsephotolist = '';
+                /*var emergencyresponsephotolist = '';
                 if(this.emergencyresponseuploader.length>0){
 
                     for(var i=0; i<this.emergencyresponseuploader.length;i++){
                         var emergencyresponsephoto = this.emergencyresponseuploader[i].content;
                         emergencyresponsephotolist=emergencyresponsephotolist+"#"+emergencyresponsephoto;
                     }
-                }
+                }*/
                 if(this.emergencyresponseradio !=''){
-                    var emergencyresponse = {"categoryId": "1","influenceFactorId":"6","determineFactor":this.emergencyresponseradio,"photo":emergencyresponsephotolist}
+                    var emergencyresponse = {"categoryId": "1","influenceFactorId":"6","determineFactor":this.emergencyresponseradio,"photo":this.emergencyResponseAfterReadList.join(',')}
                     accidentconsequencecollection.push(emergencyresponse)
                 }
                 vant.Dialog.alert({
@@ -879,7 +1328,7 @@
 
 
                     }).then(function (response) {
-                        if (response.result = "SUCCESS") {
+                        if (response.data.result === 'SUCCESS') {
                             //vant.Toast.success('录入成功,请录入事故可能性',window.location.href = "http://localhost:8080/possibilityofaccident.html");
                             // 把选中分数传给下一页
                             var score =
@@ -889,12 +1338,12 @@
                                 vm.hazardouslequipmentscore +
                                 vm.hazardouschemicalsscore +
                                 vm.emergencyresponsescore
-                            window.location.href = "http://localhost:8080/possibilityofaccident.html?score="+ score;
+                            window.location.href = "http://localhost:7000/possibilityofaccident.html?score="+ score;
                         }
                     }).catch(function (response) {
-                        if (response.result = "FAILED") {
+                        if (response.data.result === 'FAILED') {
                             //vant.Toast.fail('录入失败，请重新录入',window.location.href = "http://localhost:8080/theaccidentconsequences.html");
-                            window.location.href = "http://localhost:8080/theaccidentconsequences.html";
+                            window.location.href = "http://localhost:7000/theaccidentconsequences.html";
                         }
                     })
                 });

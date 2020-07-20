@@ -21,6 +21,7 @@
                 </van-button>
             </div>
         </van-form>
+        <van-image width="100" height="100" src="http://127.0.0.1:8089/9e322e83-9c90-483f-a62e-f88aa789e06aIMGL7542.JPG" />
     </div>
 </body>
 <!-- 引入 Vue 和 Vant 的 JS 文件 -->
@@ -63,13 +64,14 @@
                 //console.log(this.fileList)
             },
             beforeDelete(file){
-                for (let i=0;i<this.fileList.length;i++)
-                    if (this.fileList[i] === file) this.bb.split(",").splice(i,1)
-                console.log(this.bb)
 
-
-                //console.log(this.fileList)
-                //console.log(file)
+                this.fileList.forEach((item,index)=>{
+                    if(item === file){
+                        this.aa.splice(index,1)
+                    }
+                })
+                console.log(this.aa.join(','))
+                return true
             },
             afterRead(file) {
                 let vm = this
@@ -82,10 +84,15 @@
                     method: 'post',
                     data: fd
                 }).then(function (response){
+                    console.log(response)
+                    if(response.status ===200){
+                        console.log("hello")
+                    }
                     vm.aa.push(response.data.data)
-                    vm.bb = vm.aa.join(',')
+                    console.log(vm.aa.join(','))
+                    //vm.bb = vm.aa.join(',')
                     //vm.testPhoto = vm.testPhoto+","+response.data.data
-                    console.log(vm.bb)
+                    //console.log(vm.bb)
 
                     //vm.testPhoto.split(',').map(s=>{return 'http://127.0.0.1:8089' + s})
                 })
