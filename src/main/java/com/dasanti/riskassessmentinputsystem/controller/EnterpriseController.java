@@ -84,7 +84,7 @@ public class EnterpriseController {
                 try{
                     ResultEntity<String> filePath = UploadUtil.fileIpload(file);
                     if(filePath.getResult()=="SUCCESS"){
-                        src = "http://127.0.0.1:8089" + filePath.getData();
+                        src = "http://127.0.0.1:9000"+"/uploadFile" + filePath.getData();
                     }
                     System.out.println(src);
                 }catch (Exception e){

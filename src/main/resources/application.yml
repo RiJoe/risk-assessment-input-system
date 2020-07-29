@@ -9,7 +9,7 @@ spring:
   datasource:
     name: mydb
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://192.168.163.130:3306/risk_assessment?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.163.132:3306/risk_assessment?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
